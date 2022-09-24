@@ -1,0 +1,27 @@
+spring:
+  datasource: #db설정
+    url: jdbc:h2:mem:testdb;
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true  #h2 콘솔 사용 가능하게 해줌
+  jpa:
+    show-sql: true   #쿼리 작동 시 sql문 출력해줌
+    properties:
+      hibernate:
+        dialect:
+          nodeValue: org.hibernate.dialect.MySQL57Dialect
+          storage_engine: innodb
+      datasource:
+        hikari:
+          jdbc-url: jdbc:h2:mem:testdb;MODE=MYSQL; #h2가 MYSQL 쿼리 인식할 수 있게 해줌
+    hibernate:
+      ddl-auto: create
+  thymeleaf:
+    cache: false
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+    cache=false: false

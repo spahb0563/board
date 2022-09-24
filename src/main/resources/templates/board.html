@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<!-- head start -->
+<head th:replace="fragment/head :: head"></head>
+<!-- head end -->
+<body>
+<!-- header start-->
+<header th:replace="fragment/header :: header"></header>
+<!-- header end-->
+    <main role="main">
+        <div class="container px-5">
+            <div class="text-center px-5 py-3">
+                <h2>자유 게시판</h2>
+            </div>
+            <div class="px-5">
+                <a class="btn btn-primary" href="">글 작성</a>
+                <button class="btn btn-light dropdown-toggle float-right" type="button" data-toggle="dropdown" aria-expanded="false">
+                    정렬하기
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">최신순</a>
+                    <a class="dropdown-item" href="#">추천순</a>
+                    <a class="dropdown-item" href="#">댓글순</a>
+                    <a class="dropdown-item" href="#">조회순</a>
+                </div>
+            </div>
+            <div class="px-5">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div>
+                            <div class="d-inline">logo</div><div class="d-inline">name</div><div class="d-inline">hit</div>
+                        </div>
+                        <div>
+                            <a href="">PostTitle</a>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div>
+                            <div class="d-inline">logo</div><div class="d-inline">name</div><div class="d-inline">hit</div>
+                        </div>
+                        <div>
+                            <a href="">PostTitle</a>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div>
+                            <div class="d-inline">logo</div><div class="d-inline">name</div><div class="d-inline">hit</div>
+                        </div>
+                        <div>
+                            <a href="">PostTitle</a>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div>
+                            <div class="d-inline">logo</div><div class="d-inline">name</div><div class="d-inline">hit</div>
+                        </div>
+                        <div>
+                            <a href="">PostTitle</a>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div>
+                            <div class="d-inline">logo</div><div class="d-inline">name</div><div class="d-inline">hit</div>
+                        </div>
+                        <div>
+                            <a href="">PostTitle</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </main>
+<!-- footer start -->
+<footer th:replace="fragment/footer :: footer"></footer>
+<!-- footer end -->
+</body>
+</html>
