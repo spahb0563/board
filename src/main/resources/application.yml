@@ -25,3 +25,7 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
     cache=false: false
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true

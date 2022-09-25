@@ -1,6 +1,7 @@
 package com.example.board.service;
 
 import com.example.board.model.entity.Post;
+import com.example.board.model.enumclass.CategoryType;
 import com.example.board.model.network.Pagination;
 import com.example.board.model.network.PaginationDto;
 import com.example.board.model.network.dto.post.PostCreateRequestDto;
@@ -35,23 +36,24 @@ public class PostService {
     }// findById() end
 
     @Transactional
-    public Long update(Long id, PostUpdateRequestDto postUpdateRequestDto) {
-        Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id : " + id));
+    public Long update(PostUpdateRequestDto postUpdateRequestDto) { //포스트 한 개 업데이트
+        Post post = postRepository.findById(postUpdateRequestDto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id : " + postUpdateRequestDto.getId()));
 
         post.update(postUpdateRequestDto.getTitle(), postUpdateRequestDto.getContent());
 
-        return id;
-    }
+        return postUpdateRequestDto.getId();
+    }//update() end
     @Transactional
-    public Long delete(Long id) {
+    public Long delete(Long id) { // 포스트 한 개 삭제
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id : " + id));
-        return null;
-    }
+        post.delete();
+        return id;
+    }//delete() end
 
     @Transactional(readOnly = true)
-    public PaginationDto<PostListResponseDto> readAll(String categoryType, Pageable pageable) {
+    public PaginationDto<List<PostListResponseDto>> readAll(CategoryType categoryType, Pageable pageable) { //페이징 처리
         Page<Post> postList = postRepository.findAllByCategoryType(categoryType, pageable);
 
         List<PostListResponseDto> postListResponseDto = postList.stream()
@@ -65,6 +67,6 @@ public class PostService {
                 .currentElements(postList.getNumberOfElements()) // 현재 요소의 순서
                 .build()
                 ;
-        return new PaginationDto<PostListResponseDto>(postListResponseDto, pagination);
-    } // 페이징 처리
+        return new PaginationDto(postListResponseDto, pagination);
+    } //readAll() end
 }

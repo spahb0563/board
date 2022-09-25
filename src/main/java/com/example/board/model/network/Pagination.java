@@ -6,14 +6,14 @@ import lombok.experimental.Accessors;
 @Getter
 @AllArgsConstructor
 @Builder
-@Accessors(chain = true)
 public class Pagination {
 
-    private Integer totalPages;
+    private int totalPages; // 전체 페이지수
 
-    private Long totalElements;
+    private long totalElements; // 전체 데이터수
 
-    private Integer currentPage;
+    private int currentPage; // 현재 페이지수
 
-    private Integer currentElements;
+    private int currentElements; // 현재 데이터수
+
 }

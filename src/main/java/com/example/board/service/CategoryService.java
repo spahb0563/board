@@ -21,5 +21,5 @@ public class CategoryService {
                 .map(category -> new CategoryListResponseDto(category))
                 .collect(Collectors.toList())
                 ;
-    }
+    }// findAllCategoryRecentPost() end
 }

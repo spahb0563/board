@@ -12,84 +12,55 @@
     <main role="main">
         <div class="container px-5">
             <div class="text-center px-5 py-3">
-                <h2>자유 게시판</h2>
+                <h2 th:text="${category.description}"></h2>
             </div>
             <div class="px-5">
-                <a class="btn btn-primary" href="">글 작성</a>
+                <a class="btn btn-primary" href="/write">글 작성</a>
                 <button class="btn btn-light dropdown-toggle float-right" type="button" data-toggle="dropdown" aria-expanded="false">
                     정렬하기
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">최신순</a>
-                    <a class="dropdown-item" href="#">추천순</a>
-                    <a class="dropdown-item" href="#">댓글순</a>
-                    <a class="dropdown-item" href="#">조회순</a>
+                    <button class="dropdown-item" >최신순</button>
+                    <button class="dropdown-item" >추천순</button>
+                    <button class="dropdown-item" >조회순</button>
+                    <button class="dropdown-item" >댓글순</button>
                 </div>
             </div>
             <div class="px-5">
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
+                    <li class="list-group-item" th:each="post : ${postList}">
                         <div>
                             <div class="d-inline">logo</div><div class="d-inline">name</div><div class="d-inline">hit</div>
                         </div>
                         <div>
-                            <a href="">PostTitle</a>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div>
-                            <div class="d-inline">logo</div><div class="d-inline">name</div><div class="d-inline">hit</div>
-                        </div>
-                        <div>
-                            <a href="">PostTitle</a>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div>
-                            <div class="d-inline">logo</div><div class="d-inline">name</div><div class="d-inline">hit</div>
-                        </div>
-                        <div>
-                            <a href="">PostTitle</a>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div>
-                            <div class="d-inline">logo</div><div class="d-inline">name</div><div class="d-inline">hit</div>
-                        </div>
-                        <div>
-                            <a href="">PostTitle</a>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div>
-                            <div class="d-inline">logo</div><div class="d-inline">name</div><div class="d-inline">hit</div>
-                        </div>
-                        <div>
-                            <a href="">PostTitle</a>
+                            <a href="" th:text="${post.title}"></a>
                         </div>
                     </li>
                 </ul>
             </div>
             <div>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center"
+                        th:with="start=${T(java.lang.Math).floor((page.currentPage)/5)*5+1}, last=${start+4 < page.totalPages ? start+4 : page.totalPages}">
+                        <li class="page-item" th:classappend="${start == 1} ? 'disabled'">
+                            <a class="page-link" aria-label="Previous" th:href="@{${#strings.toLowerCase(category)}(page=${start}-1)}">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
+                        <li class="page-item" th:each="number : ${#numbers.sequence(start, last)}"
+                            th:classappend="${number == page.currentPage + 1} ? 'active'"
+                            th:if="${start <= last}">
+                            <a class="page-link" th:href="@{${#strings.toLowerCase(category)}(page=${number})}" th:text="${number}"></a>
+                        </li>
+                        <li class="page-item" th:classappend="${last == page.totalPages} ? 'disabled'">
+                            <a class="page-link" aria-label="Next" th:href="@{${#strings.toLowerCase(category)}(page=${last}+1)}">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
                     </ul>
                 </nav>
             </div>
-        </div>
+        </div><!-- container end -->
     </main>
 <!-- footer start -->
 <footer th:replace="fragment/footer :: footer"></footer>

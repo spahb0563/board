@@ -3,6 +3,8 @@ package com.example.board.model.enumclass;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
+
 @Getter
 @RequiredArgsConstructor
 public enum CategoryType {
@@ -20,6 +22,14 @@ public enum CategoryType {
 
     private final String description;
 
+    public static boolean contains(String type) {
+        for(CategoryType c : CategoryType.values()) {
+            if(c.name().equals(type)){
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 

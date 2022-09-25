@@ -11,39 +11,35 @@
 <!-- header end-->
 
 <!-- main start -->
-    <main role="main">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6" th:each="category : ${categoryList}">
-                    <div>
-                        <h2><a href="" th:text="${category.categoryType.title}"></a></h2>
-                    </div>
-                    <div>
-                        <ul class="list-group list-group-flush" th:each="post, index : ${category.postList}" th:if="${index.index < 5}">
-                            <li class="list-group-item">
-                                <div>
-                                    <div class="d-inline">
-                                        logo
-                                    </div>
-                                    <div class="d-inline">
-                                        name
-                                    </div>
-                                    <div class="d-inline" th:text="${post.viewCount}"></div>
-                                </div>
-                                <div>
-                                    <a href="" th:text="${post.title}"></a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+<main role="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" th:each="category : ${categoryList}">
+                <div>
+                    <h2><a th:href="@{{category}(category=${#strings.toLowerCase(category.categoryType)})}" th:text="${category.categoryType.title}"></a></h2>
                 </div>
-            </div>
-        </div> <!-- /container -->
-    </main>
-    <!-- main end -->
+                <div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:each="post, index : ${category.postList}" th:if="${index.index < 5}">
+                            <div>
+                                <div class="d-inline">logo</div>
+                                <div class="d-inline" th:text="${post.users.nickname}"></div>
+                                <div class="d-inline" th:text="${post.viewCount}"></div>
+                            </div>
+                            <div>
+                                <a href="" th:text="${post.title}"></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div><!-- col end-->
+        </div><!-- row end-->
+    </div> <!-- container end-->
+</main>
+<!-- main end -->
 
-    <!-- footer start -->
-    <footer th:replace="fragment/footer :: footer"></footer>
-    <!-- footer end -->
+<!-- footer start -->
+<footer th:replace="fragment/footer :: footer"></footer>
+<!-- footer end -->
 </body>
 </html>
