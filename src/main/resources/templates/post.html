@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<!-- head start -->
+<head th:replace="fragment/head :: head"></head>
+<!-- head end -->
+<style>
+  
+</style>
+<body>
+<!-- header start-->
+<header th:replace="fragment/header :: header"></header>
+<!-- header end-->
+<main role="main">
+  <div class="container px-5">
+      <div>
+        <div>
+          <div>
+            <div>
+              <i class="bi bi-person-bounding-box" style="font-size: 3rem"></i>
+              <div>
+                <span th:text="${post.users.nickname}"></span>
+              </div>
+              <div>
+                <span th:text="${post.createdAt}"></span>
+                <span th:text="${post.viewCount}"></span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h1 th:text="${post.title}"></h1>
+          </div>
+        </div>
+        <div>
+          <div class="border-top border-bottom" style="height: 100%">
+            <p class="py-3" th:utext="${post.content}"></p>
+          </div>
+          <div class="row justify-content-center">
+            <i class="bi bi-hand-thumbs-up text-primary mx-3" style="font-size: 3rem"></i>
+            <span class="align-middle pt-3" style="font-size: 2rem" th:text="${post.voteCount}"></span>
+            <i class="bi bi-hand-thumbs-down text-danger mx-3" style="font-size: 3rem"></i>
+            <span class="align-middle pt-3" style="font-size: 2rem" th:text="${post.voteCount}"></span>
+          </div>
+        </div>
+      </div>
+  </div>
+</main>
+<!-- footer start -->
+<footer th:replace="fragment/footer :: footer"></footer>
+<!-- footer end -->
+<script src="/js/app/write.js"></script>
+</body>
+</html>

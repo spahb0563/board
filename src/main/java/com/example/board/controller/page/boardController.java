@@ -19,9 +19,9 @@ public class boardController {
     private final PostService postService;
 
     @GetMapping("{categoryType}")
-    public String post(@PathVariable String categoryType, @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+    public String post(@PathVariable String categoryType, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
         if(CategoryType.contains(categoryType.toUpperCase())) {
-            PaginationDto paginationDto = postService.readAll(CategoryType.valueOf(categoryType.toUpperCase()), pageable);
+            PaginationDto paginationDto = postService.readAllByCategoryType(CategoryType.valueOf(categoryType.toUpperCase()), pageable);
             model.addAttribute("category", CategoryType.valueOf(categoryType.toUpperCase()));
             model.addAttribute("postList", paginationDto.getData());
             model.addAttribute("page", paginationDto.getPagination());
@@ -30,10 +30,15 @@ public class boardController {
         return "index";
     }
 
-    @GetMapping("write")
-    public String write() {
-
-
+    @GetMapping("{categoryType}/write")
+    public String write(@PathVariable String categoryType, Model model) {
+        model.addAttribute("category", categoryType);
         return "write";
+    }
+
+    @GetMapping("post/{id}")
+    public String post(@PathVariable Long id, Model model) {
+        model.addAttribute("post", postService.read(id));
+        return "post";
     }
 }

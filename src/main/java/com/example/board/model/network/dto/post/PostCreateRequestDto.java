@@ -5,7 +5,6 @@ import com.example.board.model.entity.Post;
 import com.example.board.model.entity.Users;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 public class PostCreateRequestDto {
@@ -13,19 +12,19 @@ public class PostCreateRequestDto {
 
     private String content;
 
-    private Category category;
+    private String category;
 
-    private Users users;
+    private Long usersId;
 
     @Builder
-    public PostCreateRequestDto(String title, String content, Category category, Users users) {
+    public PostCreateRequestDto(String title, String content, String category, Long usersId) {
         this.title = title;
         this.content = content;
         this.category = category;
-        this.users = users;
+        this.usersId = usersId;
     }
 
-    public Post toEntity() {
+    public Post toEntity(Category category, Users users) {
         return Post.builder()
                 .title(title)
                 .content(content)

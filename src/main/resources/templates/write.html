@@ -10,10 +10,34 @@
 <header th:replace="fragment/header :: header"></header>
 <!-- header end-->
 <main role="main">
-
+    <div class="container px-5">
+        <div class="text-center">
+            <h2>글쓰기</h2>
+        </div>
+        <form>
+            <input type="hidden" id="category" th:value="${category}">
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input type="text" class="form-control" id="title">
+            </div>
+            <div class="form-group">
+                <label for="content">내용</label>
+                <textarea class="form-control" id="content" rows="30"></textarea>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-12">
+                <div class="float-right">
+                <a class="btn btn-outline-primary" th:href="@{|/${category}|}">&nbsp; 취소 &nbsp;</a>
+                <button class="btn btn-primary" type="submit" id="btn-create">&nbsp; 등록 &nbsp;</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <!-- footer start -->
 <footer th:replace="fragment/footer :: footer"></footer>
 <!-- footer end -->
+<script src="/js/app/write.js"></script>
 </body>
 </html>

@@ -39,7 +39,7 @@ public class Post extends BaseTimeEntity {
     @ManyToOne
     private Users users;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "content")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
     private List<Opinion> opinionList;
 
     @Builder

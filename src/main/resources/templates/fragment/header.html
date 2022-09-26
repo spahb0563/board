@@ -2,36 +2,38 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org">
 <header th:fragment="header">
-    <nav class="navbar navbar-expand-md navbar-light bg-light px-5 py-0 mb-5 border-bottom">
-        <a class="navbar-brand" href="/">
-            <img th:src="@{/images/Logo.png}">
-        </a>
-        <div class="navbar-collapse collapse" id="navbarCollapse1">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item mx-3">
-                    <a class="nav-link text-dark" href="/free">자유</a>
-                </li>
-                <li class="nav-item mx-3">
-                    <a class="nav-link text-dark" href="/humor">유머</a>
-                </li>
-                <li class="nav-item mx-3">
-                    <a class="nav-link text-dark" href="/game">게임</a>
-                </li>
-                <li class="nav-item mx-3">
-                    <a class="nav-link text-dark" href="/sport">스포츠</a>
-                </li>
-                <li class="nav-item mx-3">
-                    <a class="nav-link text-dark" href="/it">IT</a>
-                </li>
-                <li class="nav-item mx-3">
-                    <a class="nav-link text-dark" href="/question">질문</a>
-                </li>
-            </ul>
-            <form class="form-inline mt-2 mt-md-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="전체 게시판 검색" aria-label="Search">
-            </form>
-            <a class="btn btn-outline-primary mx-1" href="/login">로그인</a>
-            <a class="btn btn-primary mx-1" href="/register">회원가입</a>
+    <nav class="navbar navbar-expand-xl navbar-light bg-light px-5 py-0 mb-5 border-bottom">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img th:src="@{/images/Logo.png}">
+            </a>
+            <div class="navbar-collapse collapse" id="navbarsExample06" style="">
+                <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+                    <li class="nav-item mx-3">
+                        <a class="nav-link text-dark" href="/free">자유</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link text-dark" href="/humor">유머</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link text-dark" href="/game">게임</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link text-dark" href="/sport">스포츠</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link text-dark" href="/it">IT</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link text-dark" href="/question">질문</a>
+                    </li>
+                </ul>
+                <form class="form-inline mt-2 mt-md-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="전체 게시판 검색">
+                </form>
+                <a class="btn btn-outline-primary mx-1" href="/login">로그인</a>
+                <a class="btn btn-primary mx-1" href="/register">회원가입</a>
+            </div>
         </div>
     </nav>
 </header>

@@ -17,7 +17,7 @@ public class CategoryService {
 
     @Transactional(readOnly = true) // 메인 화면에 출력될 카테고리별 최신글
     public List<CategoryListResponseDto> findAllCategoryRecentPost() {
-        return categoryRepository.findAll().stream()
+        return categoryRepository.findAllJoinFetch().stream()
                 .map(category -> new CategoryListResponseDto(category))
                 .collect(Collectors.toList())
                 ;
