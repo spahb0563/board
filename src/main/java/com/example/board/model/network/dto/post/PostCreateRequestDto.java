@@ -32,5 +32,4 @@ public class PostCreateRequestDto {
                 .users(users)
                 .build();
     }
-
 }

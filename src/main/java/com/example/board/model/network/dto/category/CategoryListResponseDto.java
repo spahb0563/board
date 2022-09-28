@@ -1,14 +1,12 @@
 package com.example.board.model.network.dto.category;
 
 import com.example.board.model.entity.Category;
-import com.example.board.model.entity.Post;
 import com.example.board.model.enumclass.CategoryType;
+import com.example.board.model.network.dto.post.CategoryMapping;
 import com.example.board.model.network.dto.post.PostListResponseDto;
 import lombok.Getter;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 public class CategoryListResponseDto {
@@ -22,9 +20,13 @@ public class CategoryListResponseDto {
     public CategoryListResponseDto(Category entity) {
         this.id = entity.getId();
         this.categoryType = entity.getType();
-        this.postList = entity.getPostList().stream()
-                .limit(5)
-                .map(post -> new PostListResponseDto(post))
-                .collect(Collectors.toList());
     }
+
+    public CategoryListResponseDto(Long id, CategoryType categoryType, List<PostListResponseDto> postList) {
+        this.id = id;
+        this.categoryType = categoryType;
+        this.postList = postList;
+    }
+
+
 }

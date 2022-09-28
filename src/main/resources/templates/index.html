@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+>
 <!-- head start -->
 <head th:replace="fragment/head :: head"></head>
 <!-- head end -->
@@ -14,23 +14,27 @@
 <main role="main">
     <div class="container-sm">
         <div class="row">
-            <div class="col-md-6 mb-5" th:each="category : ${categoryList}">
+            <div class="col-md-6 mb-5 " th:each="category : ${categoryList}">
                 <div class="px-3">
-                    <h2><a th:href="@{${#strings.toLowerCase(category.categoryType)}}" th:text="${category.categoryType.title}"></a></h2>
-                </div>
-                <div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item" th:each="post, index : ${category.postList}">
-                            <div>
-                                <div class="d-inline">logo</div>
-                                <div class="d-inline" th:text="${post.users.nickname}"></div>
-                                <div class="d-inline" th:text="${post.viewCount}"></div>
-                            </div>
-                            <div>
-                                <a th:href="@{|/post/${post.id}|}" th:text="${post.title}"></a>
-                            </div>
-                        </li>
-                    </ul>
+                    <div>
+                        <a class="btn btn-light btn-lg btn-block" th:href="@{${#strings.toLowerCase(category.categoryType)}}">
+                            <h2 th:text="${category.categoryType.title}"></h2>
+                        </a>
+                    </div>
+                    <div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" th:each="post : ${category.postList}">
+                                <div>
+                                    <div class="d-inline">logo</div>
+                                    <div class="d-inline" th:text="${post.users.nickname}"></div>
+                                    <div class="d-inline" th:text="${post.viewCount}"></div>
+                                </div>
+                                <div>
+                                    <a th:href="@{|/post/${post.id}|}" th:text="${post.title}"></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div><!-- col end-->
         </div><!-- row end-->

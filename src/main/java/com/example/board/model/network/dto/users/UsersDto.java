@@ -15,4 +15,9 @@ public class UsersDto {
         this.nickname = entity.getNickname();
         this.picture = entity.getPicture();
     }
+
+    public UsersDto(String nickname, String picture) {
+        this.nickname = nickname;
+        this.picture = picture;
+    }
 }

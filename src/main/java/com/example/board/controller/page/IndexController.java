@@ -2,6 +2,7 @@ package com.example.board.controller.page;
 
 
 import com.example.board.service.CategoryService;
+import com.example.board.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
 
     private final CategoryService categoryService;
+
+    private final PostService postService;
 
     @GetMapping("")
     public String index(Model model) {

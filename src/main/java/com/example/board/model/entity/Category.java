@@ -28,7 +28,6 @@ public class Category{
     @CreatedDate
     private LocalDateTime created_at;
 
-    @Builder
     public Category(CategoryType type) {
         this.type = type;
     }

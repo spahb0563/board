@@ -17,21 +17,19 @@
       <div>
         <div>
           <div>
+            <i class="bi bi-person-bounding-box" style="font-size: 3rem"></i>
             <div>
-              <i class="bi bi-person-bounding-box" style="font-size: 3rem"></i>
-              <div>
-                <span th:text="${post.users.nickname}"></span>
-              </div>
-              <div>
-                <span th:text="${post.createdAt}"></span>
-                <span th:text="${post.viewCount}"></span>
-              </div>
+              <span th:text="${post.users.nickname}"></span>
             </div>
-          </div>
+            <div>
+              <span th:text="${post.createdAt}"></span>
+              <span th:text="${post.viewCount}"></span>
+            </div>
+          </div><!-- 게시물 정보 -->
           <div>
             <h1 th:text="${post.title}"></h1>
-          </div>
-        </div>
+          </div><!-- 제목 -->
+        </div><!-- 게시물 상단 -->
         <div>
           <div class="border-top border-bottom" style="height: 100%">
             <p class="py-3" th:utext="${post.content}"></p>
@@ -42,7 +40,27 @@
             <i class="bi bi-hand-thumbs-down text-danger mx-3" style="font-size: 3rem"></i>
             <span class="align-middle pt-3" style="font-size: 2rem" th:text="${post.voteCount}"></span>
           </div>
-        </div>
+        </div><!-- 좋아요 -->
+        <div>
+          <div class="border rounded">
+            <div class="d-flex">
+              <div>
+                <i class="bi bi-person-bounding-box" style="font-size: 3rem"></i>
+              </div>
+              <div class="w-100 ml-3">
+                <form>
+                  <textarea class="form-control" id="opinion"></textarea>
+                </form>
+              </div>
+            </div>
+            <div>
+              <button class="btn btn-primary">댓글남기기</button>
+            </div>
+          </div>
+          <div>
+
+          </div>
+        </div><!-- 댓글 -->
       </div>
   </div>
 </main>

@@ -9,12 +9,12 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public enum CategoryType {
 
-    FREE(0,"자유", "자유 게시판"),
-    HUMOR(1,"유머", "유머 게시판"),
-    GAME(2,"게임", "게임 게시판"),
-    SPORT( 3,"스포츠", "스포츠 게시판"),
-    IT( 4,"IT", "IT 게시판"),
-    QUESTION( 5,"질문", "질문 게시판");
+    FREE(1,"자유", "자유 게시판"),
+    HUMOR(2,"유머", "유머 게시판"),
+    GAME(3,"게임", "게임 게시판"),
+    SPORT( 4,"스포츠", "스포츠 게시판"),
+    IT( 5,"IT", "IT 게시판"),
+    QUESTION( 6,"질문", "질문 게시판");
 
     private final Integer Id;
 
@@ -30,8 +30,4 @@ public enum CategoryType {
         }
         return false;
     }
-
-
-
-
 }

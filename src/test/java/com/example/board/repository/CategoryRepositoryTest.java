@@ -3,7 +3,6 @@ package com.example.board.repository;
 
 import com.example.board.config.JpaConfig;
 import com.example.board.model.entity.Category;
-import com.example.board.model.entity.Post;
 import com.example.board.model.enumclass.CategoryType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,9 +31,7 @@ public class CategoryRepositoryTest {
         CategoryType type = CategoryType.FREE;
         String title = "자유게시판";
 
-        categoryRepository.save(Category.builder()
-                .type(type)
-                .build());
+        categoryRepository.save(new Category(type));
         //when
         List<Category> categoryList = categoryRepository.findAll();
         //then
@@ -49,9 +45,7 @@ public class CategoryRepositoryTest {
         CategoryType type = CategoryType.FREE;
         String title = "자유게시판";
 
-        categoryRepository.save(Category.builder()
-                .type(type)
-                .build());
+        categoryRepository.save(new Category(type));
         //when
         categoryRepository.deleteAll();
         //then
@@ -60,6 +54,9 @@ public class CategoryRepositoryTest {
 
     @Test
     public void findAll() {
-        //given
+        categoryRepository.findTopFivePostOfAllCategory().stream().forEach(categoryMapping -> {
+            System.out.println(categoryMapping.getCategoryType());
+            System.out.println(categoryMapping.getPostId());
+        });
     }
 }
