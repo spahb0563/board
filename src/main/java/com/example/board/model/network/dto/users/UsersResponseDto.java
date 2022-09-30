@@ -4,19 +4,19 @@ import com.example.board.model.entity.Users;
 import lombok.Getter;
 
 @Getter
-public class UsersDto {
+public class UsersResponseDto {
 
     private String nickname;
 
     private String picture;
 
 
-    public UsersDto(Users entity) {
+    public UsersResponseDto(Users entity) {
         this.nickname = entity.getNickname();
         this.picture = entity.getPicture();
     }
 
-    public UsersDto(String nickname, String picture) {
+    public UsersResponseDto(String nickname, String picture) {
         this.nickname = nickname;
         this.picture = picture;
     }

@@ -15,7 +15,7 @@ const main = {
     },
 
     create: function () {
-        var data = {
+        const data = {
             category: $('#category').val().toUpperCase(),
             title: $('#title').val(),
             content: $('#content').val().replace(/\n/g, "<br/>"),

@@ -5,11 +5,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@EntityListeners(AuditingEntityListener.class)
 @Getter
 @NoArgsConstructor
 @Entity
@@ -26,9 +28,12 @@ public class Category{
     private List<Post> postList;
 
     @CreatedDate
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     public Category(CategoryType type) {
         this.type = type;
     }
 }
+
+
+

@@ -1,4 +1,4 @@
-package com.example.board.model.network.dto.post;
+package com.example.board.model.network.dto.category;
 
 import com.example.board.model.enumclass.CategoryType;
 
@@ -10,8 +10,8 @@ public interface CategoryMapping {
     CategoryType getCategoryType();
     Long getPostId();
     String getPostTitle();
+
     int getPostViewCount();
-    int getPostVoteCount();
     int getPostOpinionCount();
     LocalDateTime getPostCreatedAt();
 

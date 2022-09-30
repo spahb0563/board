@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -36,15 +35,17 @@ public class PostService {
 
     @Transactional
     public Long create(PostCreateRequestDto postCreateRequestDto) { //포스트 작성
-        Optional<Users> users = usersRepository.findById(postCreateRequestDto.getUsersId());
-        Optional<Category> category = categoryRepository.findByType(CategoryType.valueOf(postCreateRequestDto.getCategory()));
-        return postRepository.save(postCreateRequestDto.toEntity(category.get(), users.get())).getId();
+        Users users = usersRepository.findById(postCreateRequestDto.getUsersId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. userID : " + postCreateRequestDto.getUsersId()));
+        Category category = categoryRepository.findByType(CategoryType.valueOf(postCreateRequestDto.getCategory()))
+                .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다. category : " + postCreateRequestDto.getCategory()));
+        return postRepository.save(postCreateRequestDto.toEntity(category, users)).getId();
     }// create() end
 
     @Transactional
     public PostResponseDto read(Long id) { // 포스트 한 개 읽어오기
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id : " + id));
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. postID : " + id));
 
         post.plusViewCount();
 
@@ -54,16 +55,16 @@ public class PostService {
     @Transactional
     public Long update(PostUpdateRequestDto postUpdateRequestDto) { //포스트 한 개 업데이트
         Post post = postRepository.findById(postUpdateRequestDto.getId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id : " + postUpdateRequestDto.getId()));
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. postID: " + postUpdateRequestDto.getId()));
 
         post.update(postUpdateRequestDto.getTitle(), postUpdateRequestDto.getContent());
 
-        return postUpdateRequestDto.getId();
+        return post.getId();
     }//update() end
     @Transactional
     public Long delete(Long id) { // 포스트 한 개 삭제
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id : " + id));
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. postID : " + id));
         post.delete();
         return id;
     }//delete() end

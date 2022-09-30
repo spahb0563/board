@@ -14,6 +14,7 @@ spring:
         dialect:
           nodeValue: org.hibernate.dialect.MySQL57Dialect
           storage_engine: innodb
+        default_batch_fetch_size: 1000
       datasource:
         hikari:
           jdbc-url: jdbc:h2:mem:testdb;MODE=MYSQL; #h2가 MYSQL 쿼리 인식할 수 있게 해줌

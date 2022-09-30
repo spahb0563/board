@@ -13,11 +13,14 @@
 <header th:replace="fragment/header :: header"></header>
 <!-- header end-->
 <main role="main">
-  <div class="container px-5">
+  <div class="container px-5" th:with="postId=${post.id}">
+    <div>
       <div>
-        <div>
+        <div class="d-flex">
           <div>
-            <i class="bi bi-person-bounding-box" style="font-size: 3rem"></i>
+          <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg">
+          </div>
+          <div class="w-100 ml-3">
             <div>
               <span th:text="${post.users.nickname}"></span>
             </div>
@@ -25,48 +28,102 @@
               <span th:text="${post.createdAt}"></span>
               <span th:text="${post.viewCount}"></span>
             </div>
-          </div><!-- 게시물 정보 -->
-          <div>
-            <h1 th:text="${post.title}"></h1>
-          </div><!-- 제목 -->
-        </div><!-- 게시물 상단 -->
+          </div>
+        </div><!-- 게시물 정보 -->
         <div>
-          <div class="border-top border-bottom" style="height: 100%">
-            <p class="py-3" th:utext="${post.content}"></p>
+          <h1 th:text="${post.title}"></h1>
+        </div><!-- 제목 -->
+      </div><!-- 게시물 상단 -->
+      <div>
+        <div class="border-top border-bottom" style="height: 100%">
+          <div class="py-3">
+            <p th:utext="${post.content}"></p>
           </div>
-          <div class="row justify-content-center">
-            <i class="bi bi-hand-thumbs-up text-primary mx-3" style="font-size: 3rem"></i>
-            <span class="align-middle pt-3" style="font-size: 2rem" th:text="${post.voteCount}"></span>
-            <i class="bi bi-hand-thumbs-down text-danger mx-3" style="font-size: 3rem"></i>
-            <span class="align-middle pt-3" style="font-size: 2rem" th:text="${post.voteCount}"></span>
-          </div>
+        </div><!-- 게시물 내용 -->
+        <div class="row justify-content-center">
+          <i class="bi bi-hand-thumbs-up text-primary mx-3" style="font-size: 3rem"></i>
+          <span class="align-middle pt-3" style="font-size: 2rem" th:text="${post.likeCount}"></span>
+          <i class="bi bi-hand-thumbs-down text-danger mx-3" style="font-size: 3rem"></i>
+          <span class="align-middle pt-3" style="font-size: 2rem" th:text="${post.dislikeCount}"></span>
         </div><!-- 좋아요 -->
-        <div>
-          <div class="border rounded">
+      </div><!-- 게시물 -->
+      <div id="opinionList">
+        <div class="border rounded p-3 my-3">
+          <div class="d-flex">
+            <div>
+              <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg">
+            </div>
+            <div class="w-100 ml-3">
+              <form id="opinion">
+                <input type="hidden" id="postId" th:value="${postId}">
+                <textarea class="form-control" id="opinionContent"></textarea>
+              </form>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-right mt-3">
+              <button class="btn btn-primary" form="opinion" type="button" id="btn-createParent">댓글남기기</button>
+            </div>
+          </div>
+        </div><!-- 댓글 작성란-->
+        <div th:each="parent : ${post.opinionList}" th:with="parentId = ${parent.id}">
+          <div th:id="|parentId${parentId}|" class="border rounded p-3 my-3">
             <div class="d-flex">
               <div>
-                <i class="bi bi-person-bounding-box" style="font-size: 3rem"></i>
+              <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg">
               </div>
-              <div class="w-100 ml-3">
-                <form>
-                  <textarea class="form-control" id="opinion"></textarea>
-                </form>
+              <div class="w-50 ml-3">
+                <span class="d-block" th:text="${parent.users.nickname}"></span>
+                <span class="d-block" th:text="${parent.createdAt}"></span>
+              </div>
+              <div class="row w-50">
+                <div class="col text-right">
+                  <i class="bi bi-hand-thumbs-up text-primary mx-1" style="font-size: 1.5rem"></i>
+                  <span class="align-middle pt-3" style="font-size: 1rem" th:text="${parent.likeCount}"></span>
+                  <i class="bi bi-hand-thumbs-down text-danger mx-1" style="font-size: 1.5rem"></i>
+                  <span class="align-middle pt-3" style="font-size: 1rem" th:text="${parent.dislikeCount}"></span>
+                </div>
               </div>
             </div>
-            <div>
-              <button class="btn btn-primary">댓글남기기</button>
+            <div class="pt-3">
+              <p th:utext="${parent.content}"></p>
             </div>
-          </div>
-          <div>
-
-          </div>
-        </div><!-- 댓글 -->
-      </div>
-  </div>
-</main>
+            <div class="row">
+              <div class="col text-right">
+                <button class="btn btn-primary" form="opinion" type="button" th:onclick="|main.createTextField(${parentId})|">대댓글</button>
+              </div>
+            </div>
+          </div><!-- 부모 댓글 -->
+          <div th:each="child : ${parent.childOpinionList}">
+            <div th:id="|childId${child.id}|" class="border rounded p-3 my-3 ml-5">
+              <div class="d-flex">
+                <div>
+                  <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg">
+                </div>
+                <div class="w-50 ml-3">
+                  <span class="d-block" th:text="${child.users.nickname}"></span>
+                  <span class="d-block" th:text="${child.createdAt}"></span>
+                </div>
+                <div class="w-50">
+                  <i class="bi bi-hand-thumbs-up text-primary mx-3" style="font-size: 1.5rem"></i>
+                  <span class="align-middle pt-3" style="font-size: 1rem" th:text="${child.likeCount}"></span>
+                  <i class="bi bi-hand-thumbs-down text-danger mx-3" style="font-size: 1.5rem"></i>
+                  <span class="align-middle pt-3" style="font-size: 1rem" th:text="${child.dislikeCount}"></span>
+                </div>
+              </div>
+              <div class="pt-3">
+                <p th:utext="${child.content}"></p>
+              </div>
+            </div><!-- 자식 댓글 -->
+          </div><!-- 자식 댓글 반복문 -->
+        </div><!-- 부모 댓글 반복문 -->
+      </div><!-- 전체 댓글란 -->
+    </div>
+  </div><!-- container -->
+</main><!-- main -->
 <!-- footer start -->
 <footer th:replace="fragment/footer :: footer"></footer>
 <!-- footer end -->
-<script src="/js/app/write.js"></script>
+<script src="/js/app/post.js"></script>
 </body>
 </html>

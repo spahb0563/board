@@ -2,7 +2,6 @@ package com.example.board.model.network.dto.category;
 
 import com.example.board.model.entity.Category;
 import com.example.board.model.enumclass.CategoryType;
-import com.example.board.model.network.dto.post.CategoryMapping;
 import com.example.board.model.network.dto.post.PostListResponseDto;
 import lombok.Getter;
 

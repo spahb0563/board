@@ -10,5 +10,4 @@ public class PostUpdateRequestDto {
     private String title;
 
     private String content;
-
 }

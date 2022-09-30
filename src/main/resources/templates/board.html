@@ -15,15 +15,15 @@
                 <h2 th:text="${category.description}"></h2>
             </div>
             <div class="px-5">
-                <a class="btn btn-primary" th:href="@{{category}/write(category=${baseUrl})}"><i class="bi bi-pencil-square"></i> 글작성</a>
+                <a class="btn btn-primary" th:href="@{|${baseUrl}/write|}"><i class="bi bi-pencil-square"></i> 글작성</a>
                 <button class="btn btn-light dropdown-toggle float-right" type="button" data-toggle="dropdown">
                     정렬하기
                 </button>
                 <div class="dropdown-menu">
-                    <button class="dropdown-item" >최신순</button>
-                    <button class="dropdown-item" >추천순</button>
-                    <button class="dropdown-item" >조회순</button>
-                    <button class="dropdown-item" >댓글순</button>
+                    <a class="dropdown-item" th:href="@{${baseUrl}(sort='id,desc')}">최신순</a>
+                    <a class="dropdown-item" th:href="@{${baseUrl}(sort='likeCount,desc')}">추천순</a>
+                    <a class="dropdown-item" th:href="@{${baseUrl}(sort='viewCount,desc')}">조회순</a>
+                    <a class="dropdown-item" th:href="@{${baseUrl}(sort='opinionCount,desc')}">댓글순</a>
                 </div>
             </div>
             <div class="px-5">
@@ -35,8 +35,8 @@
                         <div>
                             <a th:href="@{|/post/${post.id}|}" th:text="${post.title}"></a>
                         </div>
-                    </li>
-                </ul>
+                    </li><!-- 게시물 반복문 -->
+                </ul><!-- 게시물 목록 -->
             </div>
             <div>
                 <nav aria-label="Page navigation">
@@ -44,23 +44,30 @@
                         th:with="start=${T(java.lang.Math).floor((page.currentPage)/5)*5+1},
                         last=${start+4 < page.totalPages ? start+4 : page.totalPages}"> <!--페이지 첫번호, 끝번호 설정-->
                         <li class="page-item" th:classappend="${start == 1} ? 'disabled'">
-                            <a class="page-link" aria-label="Previous" th:href="@{${baseUrl}(page=${start}-1)}"> <!-- << 버튼 href -->
+                            <a class="page-link" aria-label="Previous" th:if="${param.sort} == null" th:href="@{${baseUrl}(page=${start}-1)}"> <!-- << 버튼 href -->
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                            <a class="page-link" aria-label="Previous" th:unless="${param.sort} == null" th:href="@{${baseUrl}(page=${start}-1, sort=${param.sort})}"> <!-- << 버튼 href -->
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                         <li class="page-item" th:each="number : ${#numbers.sequence(start, last)}"
                             th:classappend="${number == page.currentPage + 1} ? 'active'"
                             th:if="${start <= last}"><!-- 버튼 첫번호부터 끝번호까지 반복문 -->
-                            <a class="page-link" th:href="@{${baseUrl}(page=${number})}" th:text="${number}"></a>
+                            <a class="page-link" th:if="${param.sort} == null" th:href="@{${baseUrl}(page=${number})}" th:text="${number}"></a>
+                            <a class="page-link" th:unless="${param.sort} == null" th:href="@{${baseUrl}(page=${number}, sort=${param.sort})}" th:text="${number}"></a>
                         </li>
                         <li class="page-item" th:classappend="${last == page.totalPages} ? 'disabled'">
-                            <a class="page-link" aria-label="Next" th:href="@{${baseUrl}(page=${last}+1)}">
+                            <a class="page-link" aria-label="Next" th:if="${param.sort} == null" th:href="@{${baseUrl}(page=${last}+1)}">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                            <a class="page-link" aria-label="Next" th:unless="${param.sort} == null" th:href="@{${baseUrl}(page=${last}+1, sort=${param.sort})}">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
                     </ul>
                 </nav>
-            </div>
+            </div><!-- 페이지 넘버 버튼 -->
         </div><!-- container end -->
     </main>
 <!-- footer start -->
