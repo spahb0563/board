@@ -26,7 +26,7 @@ public class CategoryService {
 
         for (int i = 0; i < mappingList.size(); i++) {
             if (i == mappingList.size() - 1 ||
-                    mappingList.get(i).getCategoryId().equals(mappingList.get(i + 1).getCategoryId())) {
+                    !mappingList.get(i).getCategoryId().equals(mappingList.get(i + 1).getCategoryId())) {
                 if (mappingList.get(i).getPostId() != null) {
                     postListResponseDto.add(new PostListResponseDto(mappingList.get(i)));
                 }
@@ -39,6 +39,9 @@ public class CategoryService {
                 }
             }
         }
+        categoryListResponseDto.forEach(categoryListResponseDto1 -> {
+            System.out.println(categoryListResponseDto1.getCategoryType());
+        });
         return categoryListResponseDto;
     }// findAllCategoryRecentPost() end
 

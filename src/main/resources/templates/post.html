@@ -66,7 +66,7 @@
             </div>
           </div>
         </div><!-- 댓글 작성란-->
-        <div th:each="parent : ${post.opinionList}" th:with="parentId = ${parent.id}">
+        <div th:id="|parentList${parentId}|" th:each="parent : ${post.opinionList}" th:with="parentId = ${parent.id}">
           <div th:id="|parentId${parentId}|" class="border rounded p-3 my-3">
             <div class="d-flex">
               <div>
@@ -90,7 +90,7 @@
             </div>
             <div class="row">
               <div class="col text-right">
-                <button class="btn btn-primary" form="opinion" type="button" th:onclick="|main.createTextField(${parentId})|">대댓글</button>
+                <button class="btn btn-primary" form="opinion" type="button" th:onclick="|main.createTextField(${parentId}, ${postId})|">대댓글</button>
               </div>
             </div>
           </div><!-- 부모 댓글 -->
@@ -104,11 +104,13 @@
                   <span class="d-block" th:text="${child.users.nickname}"></span>
                   <span class="d-block" th:text="${child.createdAt}"></span>
                 </div>
-                <div class="w-50">
-                  <i class="bi bi-hand-thumbs-up text-primary mx-3" style="font-size: 1.5rem"></i>
-                  <span class="align-middle pt-3" style="font-size: 1rem" th:text="${child.likeCount}"></span>
-                  <i class="bi bi-hand-thumbs-down text-danger mx-3" style="font-size: 1.5rem"></i>
-                  <span class="align-middle pt-3" style="font-size: 1rem" th:text="${child.dislikeCount}"></span>
+                <div class="row w-50">
+                  <div class="col text-right">
+                    <i class="bi bi-hand-thumbs-up text-primary mx-1" style="font-size: 1.5rem"></i>
+                    <span class="align-middle pt-3" style="font-size: 1rem" th:text="${parent.likeCount}"></span>
+                    <i class="bi bi-hand-thumbs-down text-danger mx-1" style="font-size: 1.5rem"></i>
+                    <span class="align-middle pt-3" style="font-size: 1rem" th:text="${parent.dislikeCount}"></span>
+                  </div>
                 </div>
               </div>
               <div class="pt-3">

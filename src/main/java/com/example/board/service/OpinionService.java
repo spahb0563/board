@@ -35,9 +35,9 @@ public class OpinionService {
 
         Opinion opinion = null;
 
-        if(opinionCreateRequestDto.getParentOpinionId() != null) {
-            opinion = opinionRepository.findById(opinionCreateRequestDto.getPostId())
-                    .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다. opinionID : " + opinionCreateRequestDto.getParentOpinionId()));
+        if(opinionCreateRequestDto.getParentId() != null) {
+            opinion = opinionRepository.findById(opinionCreateRequestDto.getParentId())
+                    .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다. opinionID : " + opinionCreateRequestDto.getParentId()));
         }
 
         Opinion savedOpinion = opinionRepository.save(opinionCreateRequestDto.toEntity(post, users, opinion));

@@ -14,8 +14,6 @@ public class IndexController {
 
     private final CategoryService categoryService;
 
-    private final PostService postService;
-
     @GetMapping("")
     public String index(Model model) {
         model.addAttribute("categoryList", categoryService.findAllCategoryRecentPost());

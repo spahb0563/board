@@ -26,6 +26,8 @@ public class OpinionResponseDto {
     private int dislikeCount;
 
     private UsersResponseDto users;
+
+    private Long parentId;
     private List<OpinionResponseDto> childOpinionList;
 
     private String createdAt;
@@ -35,6 +37,7 @@ public class OpinionResponseDto {
         this.content = entity.getContent();
         this.likeCount = entity.getLikeCount();
         this.dislikeCount = entity.getDislikeCount();
+        if(entity.getParentOpinion() != null) this.parentId = entity.getParentOpinion().getId();
         this.users = new UsersResponseDto(entity.getUsers());
         this.createdAt = entity.getCreatedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT));
         if(entity.getChildOpinionList() != null) this.childOpinionList = entity.getChildOpinionList().stream()

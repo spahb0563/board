@@ -17,7 +17,7 @@ public class OpinionCreateRequestDto {
 
     private Long usersId;
 
-    private Long parentOpinionId;
+    private Long parentId;
 
     public Opinion toEntity(Post post, Users users, Opinion opinion) {
         return Opinion.builder()
