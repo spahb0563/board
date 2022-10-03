@@ -2,12 +2,12 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org">
 <header th:fragment="header">
-    <nav class="navbar navbar-expand-xl navbar-light bg-light py-0 mb-5 border-bottom">
+    <nav class="navbar navbar-expand-xl navbar-light bg-light py-0 mb-5 ml-1 border-bottom">
         <div class="container">
             <a class="navbar-brand" href="/">
                 <img th:src="@{/images/Logo.png}">
             </a>
-            <div class="navbar-collapse collapse" id="navbarsExample06" style="">
+            <div class="navbar-collapse collapse" >
                 <ul class="navbar-nav me-auto mb-2 mb-xl-0">
                     <li class="nav-item mx-3">
                         <a class="nav-link text-dark" href="/free">자유</a>
@@ -28,11 +28,32 @@
                         <a class="nav-link text-dark" href="/question">질문</a>
                     </li>
                 </ul>
-                <form class="form-inline mt-2 mt-md-0 ml-3">
+                <form class="form-inline mt-2 mt-md-0 ml-3 mr-1">
                     <input class="form-control mr-sm-2" type="text" placeholder="전체 게시판 검색">
                 </form>
-                <a class="btn btn-outline-primary ml-3" href="/login">로그인</a>
-                <a class="btn btn-primary ml-3" href="/register">회원가입</a>
+                <th:block th:if="${user == null}">
+                    <a class="btn btn-outline-primary" href="/login">로그인</a>
+                    <a class="btn btn-primary ml-3" href="/register">회원가입</a>
+                </th:block>
+                <th:block th:if="${user != null}">
+                    <button class="border-0 ml-5" style="background-color: transparent;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+                            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"></path>
+                        </svg>
+                    </button>
+                    <div class="ml-3 btn-group">
+                    <button class="border-0" data-toggle="dropdown" style="background-color: transparent;">
+                        <img class="rounded-circle" style="width: 50px; height: 50px" th:src="${user.picture}" onerror="this.src='https://dummyimage.com/50x50/ced4da/6c757d.jpg'">
+                    </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <button class="dropdown-item" type="button">Action</button>
+                            <button class="dropdown-item" type="button">Another action</button>
+                            <button class="dropdown-item" type="button">Something else here</button>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/logout">logout</a>
+                        </div>
+                    </div>
+                </th:block>
             </div>
         </div>
     </nav>

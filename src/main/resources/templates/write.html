@@ -16,6 +16,7 @@
         </div>
         <form>
             <input type="hidden" id="category" th:value="${category}">
+            <input type="hidden" id="userId" th:value="${user.id}">
             <div class="form-group">
                 <label for="title">제목</label>
                 <input type="text" class="form-control" id="title">
@@ -27,7 +28,7 @@
         </form>
         <div class="row">
             <div class="col text-right">
-                <a class="btn btn-outline-primary" th:href="@{|/${category}|}">&nbsp; 취소 &nbsp;</a>
+                <a class="btn btn-outline-primary" href="./">&nbsp; 취소 &nbsp;</a>
                 <button class="btn btn-primary" type="submit" id="btn-create">&nbsp; 등록 &nbsp;</button>
             </div>
         </div>

@@ -22,7 +22,7 @@ const main = {
         const data = {
             content : $('#opinionContent').val(),
             postId : $('#postId').val(),
-            usersId : 1
+            usersId : $('#userId').val()
         };
 
         if(data.content === '') {
@@ -43,7 +43,7 @@ const main = {
                 '          <div id="parentId'+result.id+'" class="border rounded p-3 my-3">\n' +
                 '            <div class="d-flex">\n' +
                 '              <div>\n' +
-                '              <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg">\n' +
+                '              <img class="rounded-circle" style="height: 50px; width: 50px" onerror="this.src=\'https://dummyimage.com/50x50/ced4da/6c757d.jpg\'" src="'+result.users.picture+'">\n' +
                 '              </div>\n' +
                 '              <div class="w-50 ml-3">\n' +
                 '                <span class="d-block">'+result.users.nickname+'</span>\n' +
@@ -63,7 +63,7 @@ const main = {
                 '            </div>\n' +
                 '            <div class="row">\n' +
                 '              <div class="col text-right">\n' +
-                '                <button class="btn btn-primary" form="opinion" type="button" onclick="main.createTextField('+result.id+','+data.postId+')">대댓글</button>\n' +
+                '                <button class="btn btn-primary" form="opinion" type="button" onclick="main.createTextField('+result.id+',\''+result.users.picture+'\')">대댓글</button>\n' +
                 '              </div>\n' +
                 '            </div>\n' +
                 '          </div>';
@@ -74,16 +74,15 @@ const main = {
         });
     },
 
-    createTextField: function (parentId, postId) {
+    createTextField: function (parentId, userPicture) {
         let replyItem = '<div class="border rounded p-3 my-3 ml-5" id="childOpinionTextField">\n' +
             '          <div class="d-flex">\n' +
             '            <div>\n' +
-            '              <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg">\n' +
+            '              <img class="rounded-circle" style="height: 50px; width: 50px" onerror="this.src=\'https://dummyimage.com/50x50/ced4da/6c757d.jpg\'" src="'+userPicture+'">\n' +
             '            </div>\n' +
             '            <div class="w-100 ml-3">\n' +
             '              <form id="childOpinion">\n' +
             '                <input type="hidden" id="parentId" value='+parentId+'>\n' +
-            '                <input type="hidden" id="postId" value='+postId+'>\n' +
             '                <textarea class="form-control" id="childOpinionContent"></textarea>\n' +
             '              </form>\n' +
             '            </div>\n' +
@@ -96,12 +95,14 @@ const main = {
             '        </div>';
         if($('#childOpinionTextField').length === 0) {
             $('#parentId'+ parentId).after(replyItem);
+            $('#childOpinionContent').focus();
         }else {
             if(parentId == $('#parentId').val()) {
                 $('#childOpinionTextField').remove();
             }else {
                 $('#childOpinionTextField').remove();
                 $('#parentId'+ parentId).after(replyItem);
+                $('#childOpinionContent').focus();
             }
         }
     },
@@ -112,7 +113,7 @@ const main = {
             parentId : $('#parentId').val(),
             content : $('#childOpinionContent').val(),
             postId : $('#postId').val(),
-            usersId : 1
+            usersId : $('#userId').val()
         }
 
         if(data.content === '') {
@@ -133,7 +134,7 @@ const main = {
                 '            <div class="border rounded p-3 my-3 ml-5">\n' +
                 '              <div class="d-flex">\n' +
                 '                <div>\n' +
-                '                  <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg">\n' +
+                '                   <img class="rounded-circle" style="height: 50px; width: 50px" onerror="this.src=\'https://dummyimage.com/50x50/ced4da/6c757d.jpg\'" src="'+result.users.picture+'">\n' +
                 '                </div>\n' +
                 '                <div class="w-50 ml-3">\n' +
                     '                <span class="d-block">'+result.users.nickname+'</span>\n' +

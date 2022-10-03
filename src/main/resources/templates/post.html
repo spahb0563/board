@@ -14,11 +14,13 @@
 <!-- header end-->
 <main role="main">
   <div class="container px-5" th:with="postId=${post.id}">
+    <input type="hidden" id="userId" th:if="${user != null}" th:value="${user.id}">
+    <input type="hidden" id="postId" th:value="${postId}">
     <div>
       <div>
         <div class="d-flex">
           <div>
-          <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg">
+          <img class="rounded-circle" style="width: 50px; height: 50px" onerror="this.src='https://dummyimage.com/50x50/ced4da/6c757d.jpg'" th:src="${post.users.picture}">
           </div>
           <div class="w-100 ml-3">
             <div>
@@ -51,11 +53,11 @@
         <div class="border rounded p-3 my-3">
           <div class="d-flex">
             <div>
-              <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg">
+              <img class="rounded-circle" style="width: 50px; height: 50px" onerror="this.src='https://dummyimage.com/50x50/ced4da/6c757d.jpg'" th:if="${user != null}" th:src="${user.picture}">
+              <img class="rounded-circle" style="width: 50px; height: 50px" th:unless="${user != null}" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg">
             </div>
             <div class="w-100 ml-3">
               <form id="opinion">
-                <input type="hidden" id="postId" th:value="${postId}">
                 <textarea class="form-control" id="opinionContent"></textarea>
               </form>
             </div>
@@ -70,7 +72,7 @@
           <div th:id="|parentId${parentId}|" class="border rounded p-3 my-3">
             <div class="d-flex">
               <div>
-              <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg">
+                <img class="rounded-circle" style="width: 50px; height: 50px" onerror="this.src='https://dummyimage.com/50x50/ced4da/6c757d.jpg'" th:src="${parent.users.picture}">
               </div>
               <div class="w-50 ml-3">
                 <span class="d-block" th:text="${parent.users.nickname}"></span>
@@ -98,7 +100,7 @@
             <div th:id="|childId${child.id}|" class="border rounded p-3 my-3 ml-5">
               <div class="d-flex">
                 <div>
-                  <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg">
+                  <img class="rounded-circle" style="width: 50px; height: 50px" onerror="this.src='https://dummyimage.com/50x50/ced4da/6c757d.jpg'" th:src="${child.users.picture}">
                 </div>
                 <div class="w-50 ml-3">
                   <span class="d-block" th:text="${child.users.nickname}"></span>

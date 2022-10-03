@@ -30,7 +30,7 @@
                                     <div class="d-inline" th:text="${post.viewCount}"></div>
                                 </div>
                                 <div>
-                                    <a th:href="@{|/post/${post.id}|}" th:text="${post.title}"></a>
+                                    <a class="text-decoration-none" th:href="@{|/post/${post.id}|}" th:text="${post.title}"></a>
                                 </div>
                             </li>
                         </ul>

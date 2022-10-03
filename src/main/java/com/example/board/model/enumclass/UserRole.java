@@ -15,6 +15,6 @@ public enum UserRole {
     ;
 
     private final Integer id;
-    private final String title;
+    private final String key;
     private final String description;
 }

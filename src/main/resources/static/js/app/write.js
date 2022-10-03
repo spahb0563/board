@@ -19,7 +19,7 @@ const main = {
             category: $('#category').val().toUpperCase(),
             title: $('#title').val(),
             content: $('#content').val().replace(/\n/g, "<br/>"),
-            usersId: 1
+            usersId: $('#userId').val()
         };
 
         $.ajax({

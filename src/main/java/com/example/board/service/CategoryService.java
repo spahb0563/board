@@ -39,9 +39,6 @@ public class CategoryService {
                 }
             }
         }
-        categoryListResponseDto.forEach(categoryListResponseDto1 -> {
-            System.out.println(categoryListResponseDto1.getCategoryType());
-        });
         return categoryListResponseDto;
     }// findAllCategoryRecentPost() end
 
@@ -49,5 +46,5 @@ public class CategoryService {
         return categoryRepository.findAll().stream()
                 .map(category -> new CategoryListResponseDto(category))
                 .collect(Collectors.toList());
-    }
+    }// findAll() end
 }
