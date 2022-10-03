@@ -53,18 +53,18 @@
         <div class="border rounded p-3 my-3">
           <div class="d-flex">
             <div>
-              <img class="rounded-circle" style="width: 50px; height: 50px" onerror="this.src='https://dummyimage.com/50x50/ced4da/6c757d.jpg'" th:if="${user != null}" th:src="${user.picture}">
-              <img class="rounded-circle" style="width: 50px; height: 50px" th:unless="${user != null}" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg">
+              <img class="rounded-circle" style="width: 50px; height: 50px" th:if="${user == null}" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg">
+              <img class="rounded-circle" style="width: 50px; height: 50px" onerror="this.src='https://dummyimage.com/50x50/ced4da/6c757d.jpg'" th:unless="${user == null}" th:src="${user.picture}">
             </div>
             <div class="w-100 ml-3">
-              <form id="opinion">
-                <textarea class="form-control" id="opinionContent"></textarea>
+              <form id="opinion" th:with="isUser = ${user != null && user.role.name != 'USER' ? '이메일 인증을 해주세요.' : ''}, placeholder = ${user == null ? '로그인 해주세요.' : isUser}">
+                <textarea class="form-control" id="opinionContent" th:placeholder="${placeholder}" th:disabled="${user == null || user.role.name != 'USER'}"></textarea>
               </form>
             </div>
           </div>
           <div class="row">
             <div class="col text-right mt-3">
-              <button class="btn btn-primary" form="opinion" type="button" id="btn-createParent">댓글남기기</button>
+              <button class="btn btn-primary" form="opinion" type="button" id="btn-createParent" th:disabled="${user == null || user.role.name != 'USER'}">댓글남기기</button>
             </div>
           </div>
         </div><!-- 댓글 작성란-->
@@ -92,7 +92,7 @@
             </div>
             <div class="row">
               <div class="col text-right">
-                <button class="btn btn-primary" form="opinion" type="button" th:onclick="|main.createTextField(${parentId}, ${postId})|">대댓글</button>
+                <button class="btn btn-primary" form="opinion" type="button" th:onclick="|main.createTextField(${parentId}, ${postId})|" th:disabled="${user == null || user.role.name != 'USER'}">대댓글</button>
               </div>
             </div>
           </div><!-- 부모 댓글 -->

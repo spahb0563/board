@@ -39,6 +39,7 @@ const main = {
             async: false,
             data: JSON.stringify(data)
         }).done(function (result){
+            if(result.users == null) return;
             let replyItem = '<div id="parentList'+result.id+'">\n' +
                 '          <div id="parentId'+result.id+'" class="border rounded p-3 my-3">\n' +
                 '            <div class="d-flex">\n' +
