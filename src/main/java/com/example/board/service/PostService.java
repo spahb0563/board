@@ -6,10 +6,7 @@ import com.example.board.model.entity.Users;
 import com.example.board.model.enumclass.CategoryType;
 import com.example.board.model.network.Pagination;
 import com.example.board.model.network.PaginationDto;
-import com.example.board.model.network.dto.post.PostCreateRequestDto;
-import com.example.board.model.network.dto.post.PostListResponseDto;
-import com.example.board.model.network.dto.post.PostResponseDto;
-import com.example.board.model.network.dto.post.PostUpdateRequestDto;
+import com.example.board.model.network.dto.post.*;
 import com.example.board.repository.CategoryRepository;
 import com.example.board.repository.PostRepository;
 import com.example.board.repository.UsersRepository;
@@ -43,27 +40,41 @@ public class PostService {
     }// create() end
 
     @Transactional
-    public PostResponseDto read(Long id) { // 포스트 한 개 읽어오기
-        Post post = postRepository.findById(id)
+    public PostResponseDto readAndPlusViewCount(Long id) { // 포스트 한 개 읽어오고 조회수 증가
+        Post post = postRepository.findByIdAndDeletedAtIsNull(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. postID : " + id));
 
         post.plusViewCount();
 
         return new PostResponseDto(post);
-    }// raed() end
+    }// readAndPlusViewCount() end
+
+    public PostResponseDto read(Long id) { // 포스트 한 개 읽어오기
+        Post post = postRepository.findByIdAndDeletedAtIsNull(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. postID : " + id));
+        return new PostResponseDto(post);
+    }// read() end
+
+    public PostEditResponseDto readEdit(Long id) {
+        Post post = postRepository.findByIdAndDeletedAtIsNull(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. postID : " + id));
+
+        return new PostEditResponseDto(post);
+    }// readEdit() end
 
     @Transactional
     public Long update(PostUpdateRequestDto postUpdateRequestDto) { //포스트 한 개 업데이트
-        Post post = postRepository.findById(postUpdateRequestDto.getId())
+        Post post = postRepository.findByIdAndDeletedAtIsNull(postUpdateRequestDto.getId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. postID: " + postUpdateRequestDto.getId()));
 
         post.update(postUpdateRequestDto.getTitle(), postUpdateRequestDto.getContent());
 
         return post.getId();
     }//update() end
+
     @Transactional
     public Long delete(Long id) { // 포스트 한 개 삭제
-        Post post = postRepository.findById(id)
+        Post post = postRepository.findByIdAndDeletedAtIsNull(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. postID : " + id));
         post.delete();
         return id;
@@ -71,7 +82,7 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public PaginationDto<List<PostListResponseDto>> readAllByCategoryType(CategoryType categoryType, Pageable pageable) { //페이징 처리
-        Page<Post> postList = postRepository.findAllByCategoryType(categoryType, pageable);
+        Page<Post> postList = postRepository.findAllByCategoryTypeAndDeletedAtIsNull(categoryType, pageable);
 
         List<PostListResponseDto> postListResponseDto = postList.stream()
                 .map(post -> new PostListResponseDto(post))

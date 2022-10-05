@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<!-- head start -->
+<head th:replace="fragment/head :: head"></head>
+<!-- head end -->
+<body>
+<!-- header start-->
+<header th:replace="fragment/header :: header"></header>
+<!-- header end-->
+<main role="main">
+    <div class="container px-5">
+        <div class="text-center">
+            <h2>작성글 수정</h2>
+        </div>
+        <form>
+            <input type="hidden" id="postId" th:value="${post.id}">
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input type="text" class="form-control" id="title" th:value="${post.title}">
+            </div>
+            <div class="form-group">
+                <label for="content">내용</label>
+                <textarea class="form-control" id="content" rows="30" th:utext="${post.content}"></textarea>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col text-right">
+                <a class="btn btn-outline-primary" href="./">&nbsp; 취소 &nbsp;</a>
+                <button class="btn btn-primary" type="submit" id="btn-update">&nbsp; 수정 &nbsp;</button>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- footer start -->
+<footer th:replace="fragment/footer :: footer"></footer>
+<!-- footer end -->
+<script src="/js/app/edit.js"></script>
+</body>
+</html>

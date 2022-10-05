@@ -1,17 +1,16 @@
 const main = {
     init: function () {
         const _this = this;
-        $('#btn-create').on('click', function () {
-            _this.create();
+        $('#btn-update').on('click', function () {
+            _this.update();
         });
     },
 
-    create: function () {
+    update: function () {
         const data = {
-            category: $('#category').val().toUpperCase(),
+            id: $('#postId').val(),
             title: $('#title').val(),
-            content: $('#content').val().replace(/\n/g, "<br/>"),
-            usersId: $('#userId').val()
+            content: $('#content').val().replace(/\n/g, "<br/>")
         };
 
         if(data.title === '' || data.title.trim() === '') {
@@ -29,16 +28,16 @@ const main = {
         }
 
         $.ajax({
-            type : 'POST',
+            type : 'PUT',
             url : '/api/v1/post',
             dateType: 'json',
             contentType: 'application/json; charset=utf8',
             data: JSON.stringify(data)
         }).done(function (id){
-            alert('글이 등록되었습니다.');
+            alert('글이 수정되었습니다.');
             window.location.href= '/post/'+id;
         }).fail(function (error){
-            alert('등록 실패');
+            alert('수정 실패');
         });
     }
 };

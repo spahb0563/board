@@ -32,6 +32,8 @@ public class OpinionResponseDto {
     private Long postId;
     private List<OpinionResponseDto> childOpinionList;
 
+    private LocalDateTime deletedAt;
+
     private String createdAt;
 
     public OpinionResponseDto(Opinion entity) {
@@ -42,8 +44,9 @@ public class OpinionResponseDto {
         if(entity.getParentOpinion() != null) this.parentId = entity.getParentOpinion().getId();
         this.users = new UsersResponseDto(entity.getUsers());
         this.postId = entity.getPost().getId();
-        this.createdAt = entity.getCreatedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT));
-        if(entity.getChildOpinionList() != null) this.childOpinionList = entity.getChildOpinionList().stream()
+        this.deletedAt = entity.getDeletedAt();
+        this.createdAt = entity.getCreatedAt().format(DateTimeFormatter.ofPattern("yy. M. d HH:mm"));
+        if(entity.getChildOpinionList() != null) this.childOpinionList = entity.getChildOpinionList().stream().filter(opinion -> opinion.getDeletedAt() == null)
                 .map(opinion -> new OpinionResponseDto(opinion)).collect(Collectors.toList());
     }
 }

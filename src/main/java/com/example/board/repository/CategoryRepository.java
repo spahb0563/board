@@ -23,6 +23,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             "       p.view_count    postViewCount,\n" +
             "       p.opinion_count postOpinionCount,\n" +
             "       p.created_at    postCreatedAt,\n" +
+            "       u.id            usersId,\n" +
             "       u.nickname      usersNickname,\n" +
             "       u.picture       usersPicture\n" +
             "FROM   category c\n" +

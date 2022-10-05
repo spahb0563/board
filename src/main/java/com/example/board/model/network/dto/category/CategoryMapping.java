@@ -15,6 +15,7 @@ public interface CategoryMapping {
     int getPostOpinionCount();
     LocalDateTime getPostCreatedAt();
 
+    Long getUsersId();
     String getUsersNickname();
     String getUsersPicture();
 }

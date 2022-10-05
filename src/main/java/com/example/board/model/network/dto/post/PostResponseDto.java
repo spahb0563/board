@@ -6,9 +6,7 @@ import com.example.board.model.network.dto.users.UsersResponseDto;
 import lombok.Getter;
 
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Getter
@@ -38,7 +36,7 @@ public class PostResponseDto {
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.users = new UsersResponseDto(entity.getUsers());
-        this.createdAt = entity.getCreatedAt().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT));
+        this.createdAt = entity.getCreatedAt().format(DateTimeFormatter.ofPattern("yy. M. d HH:mm"));
         this.viewCount = entity.getViewCount();
         this.likeCount = entity.getLikeCount();
         this.dislikeCount = entity.getDislikeCount();

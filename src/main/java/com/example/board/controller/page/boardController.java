@@ -1,5 +1,6 @@
 package com.example.board.controller.page;
 
+import com.example.board.config.auth.LoginUser;
 import com.example.board.config.auth.dto.SessionUser;
 import com.example.board.model.enumclass.CategoryType;
 import com.example.board.model.network.PaginationDto;
@@ -13,6 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
@@ -21,11 +25,9 @@ public class boardController {
 
     private final PostService postService;
 
-    private final HttpSession httpSession;
-
     @GetMapping("{categoryType}")
-    public String post(@PathVariable String categoryType, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
-        SessionUser user = (SessionUser) httpSession.getAttribute("users");
+    public String post(@LoginUser SessionUser user, @PathVariable String categoryType, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+
         if(user != null) {
             model.addAttribute("user", user);
         }
@@ -39,31 +41,60 @@ public class boardController {
         }
 
         return "index";
-    }
+    }// post() end
 
     @GetMapping("{categoryType}/write")
-    public String write(@PathVariable String categoryType, Model model) {
+    public String write(@LoginUser SessionUser user, @PathVariable String categoryType, Model model) {
         model.addAttribute("category", categoryType);
+        model.addAttribute("user", user);
 
-        SessionUser user = (SessionUser) httpSession.getAttribute("users");
+        return "write";
+    }// write() end
 
+    @GetMapping("post/{id}")
+    public String post(@LoginUser SessionUser user, @PathVariable Long id, Model model, HttpServletRequest request, HttpServletResponse response) {
         if(user != null) {
             model.addAttribute("user", user);
         }
 
-        return "write";
-    }
+        Cookie[] cookies = request.getCookies();
+        Cookie cookie = null;
+        Long userId = user != null ? user.getId() : 0L;
 
-    @GetMapping("post/{id}")
-    public String post(@PathVariable Long id, Model model) {
-        model.addAttribute("post", postService.read(id));
+        if(cookies != null) {
+            for(Cookie c : cookies) {
+                if(c.getName().equals(userId+"_visited")) {
+                    cookie = c;
+                }
+            }
+        }
 
-        SessionUser user = (SessionUser) httpSession.getAttribute("users");
-
-        if(user != null) {
-            model.addAttribute("user", user);
+        if(cookie != null) {
+            if(!cookie.getValue().contains("["+id+"]")) {
+                model.addAttribute("post", postService.readAndPlusViewCount(id));
+                cookie.setValue(cookie.getValue()+"["+id+"]");
+                cookie.setPath("/");
+                cookie.setMaxAge(60 * 60 * 24);
+                response.addCookie(cookie);
+            }else {
+                model.addAttribute("post", postService.read(id));
+            }
+        }else {
+            model.addAttribute("post", postService.readAndPlusViewCount(id));
+            Cookie newCookie = new Cookie(userId+"_visited", "["+id+"]");
+            newCookie.setPath("/");
+            newCookie.setMaxAge(60 * 60 * 24);
+            response.addCookie(newCookie);
         }
 
         return "post";
+    }// post() end
+
+    @GetMapping("post/{id}/edit")
+    public String edit(@LoginUser SessionUser user, @PathVariable Long id, Model model) {
+        model.addAttribute("user", user);
+        model.addAttribute("post", postService.readEdit(id));
+
+        return "edit";
     }
 }

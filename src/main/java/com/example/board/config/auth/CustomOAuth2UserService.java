@@ -40,13 +40,13 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
         Users users = saveOrUpdate(attributes);
-        httpSession.setAttribute("users", new SessionUser(users));
+        httpSession.setAttribute("user", new SessionUser(users));
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(users.getRoleKey())),attributes.getAttributes(),attributes.getNameAttributeKey());
     }
 
     private Users saveOrUpdate(OAuthAttributes attributes) {
         Users users = usersRepository.findByEmail(attributes.getEmail())
-                .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
+                .map(entity -> entity.update(attributes.getName(), attributes.getPicture() == null ? "/images/anonymous.png" : attributes.getPicture()))
                 .orElse(attributes.toEntity())
                 ;
         return usersRepository.save(users);

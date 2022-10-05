@@ -7,6 +7,41 @@
             <a class="navbar-brand" href="/">
                 <img th:src="@{/images/Logo.png}">
             </a>
+            <div class="navbar-toggler border-0">
+                <th:block th:if="${user != null}">
+                    <button class="border-0" style="background-color: transparent;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+                        </svg>
+                    </button>
+                </th:block>
+                <div class="ml-1 btn-group border-0">
+                    <button class="border-0" data-toggle="dropdown" style="background-color: transparent;">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right text-center text-dark">
+                        <a class="dropdown-item h-3" type="button" href="/free">자 유</a>
+                        <a class="dropdown-item h-3" type="button" href="/humor">유 머</a>
+                        <a class="dropdown-item h-3" type="button" href="/game">게 임</a>
+                        <a class="dropdown-item h-3" type="button" href="/sport">스 포 츠</a>
+                        <a class="dropdown-item h-3" type="button" href="/it">I T</a>
+                        <a class="dropdown-item h-3" type="button" href="/question">질 문</a>
+                        <div class="dropdown-divider"></div>
+                        <th:block th:if="${user == null}">
+                            <a class="dropdown-item" href="/login">로 그 인</a>
+                            <a class="dropdown-item" href="/register">회 원 가 입</a>
+                        </th:block>
+                        <th:block th:unless="${user == null}">
+                            <a class="dropdown-item" href="/">내 정 보</a>
+                            <a class="dropdown-item" href="/logout">로 그 아 웃</a>
+                        </th:block>
+                        <div class="dropdown-divider"></div>
+                        <form class="form-inline my-2 my-md-0">
+                            <input class="form-control" type="text" placeholder="전체 게시판 검색">
+                        </form>
+                    </div>
+                </div>
+            </div>
             <div class="navbar-collapse collapse" >
                 <ul class="navbar-nav me-auto mb-2 mb-xl-0">
                     <li class="nav-item mx-3">
@@ -37,20 +72,20 @@
                 </th:block>
                 <th:block th:if="${user != null}">
                     <button class="border-0 ml-5" style="background-color: transparent;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
-                            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"></path>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
                         </svg>
                     </button>
                     <div class="ml-3 btn-group">
-                    <button class="border-0" data-toggle="dropdown" style="background-color: transparent;">
-                        <img class="rounded-circle" style="width: 50px; height: 50px" th:src="${user.picture}" onerror="this.src='https://dummyimage.com/50x50/ced4da/6c757d.jpg'">
-                    </button>
+                        <button class="border-0" data-toggle="dropdown" style="background-color: transparent;">
+                            <img class="rounded-circle" style="width: 50px; height: 50px" th:src="${user.picture}" onerror="this.src='/images/anonymous.png'">
+                        </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <button class="dropdown-item" type="button">Action</button>
                             <button class="dropdown-item" type="button">Another action</button>
                             <button class="dropdown-item" type="button">Something else here</button>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/logout">logout</a>
+                            <a class="dropdown-item" href="/logout">로그아웃</a>
                         </div>
                     </div>
                 </th:block>

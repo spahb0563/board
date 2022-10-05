@@ -69,9 +69,11 @@ public class OpinionService {
         Opinion opinion = opinionRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다. opinionID : " + id));
 
-        opinion.getPost().updateOpinionCount(-1); // 게시물 댓글수 감소
+        Post post = opinion.getPost();
 
         opinion.delete();
+
+        post.updateOpinionCount(-1); // 게시물 댓글수 감소
         return id;
     }//delete() end
 
