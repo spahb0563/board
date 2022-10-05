@@ -58,7 +58,7 @@ const main = {
                 '                        </svg>\n' +
                 '                      </button>\n' +
                 '                      <div class="dropdown-menu dropdown-menu-right">\n' +
-                '                        <a class="dropdown-item" type="button">수정하기</a>\n' +
+                '                        <a class="dropdown-item" type="button" onclick="main.createUpdateField('+result.id+ ', true)">수정하기</a>\n' +
                 '                        <button class="dropdown-item" type="button" onclick="main.deleteOpinion('+result.id+ ', true)">삭제하기</button>\n' +
                 '                      </div>' +
                 '                </div>\n' +
@@ -137,7 +137,7 @@ const main = {
             data: JSON.stringify(data)
         }).done(function (result){
             $('#childOpinionTextField').remove();
-            let Item =
+            let replyItem =
                 '            <div id="'+result.id+'" class="border rounded p-3 my-3 ml-5">\n' +
                 '              <div class="d-flex">\n' +
                 '                <div>\n' +
@@ -160,7 +160,7 @@ const main = {
                     '                        </svg>\n' +
                     '                      </button>\n' +
                     '                      <div class="dropdown-menu dropdown-menu-right">\n' +
-                    '                        <a class="dropdown-item" type="button">수정하기</a>\n' +
+                    '                        <a class="dropdown-item" type="button" onclick="main.createUpdateField('+result.id+ ', false)">수정하기</a>\n' +
                     '                        <button class="dropdown-item" type="button" onclick="main.deleteOpinion('+result.id+ ', false)">삭제하기</button>\n' +
                     '                      </div>' +
                     '                </div>\n' +
@@ -169,7 +169,7 @@ const main = {
                 '              <div class="pt-3">\n' +
                 '               <p>'+result.content+'</p>\n' +
                 '              </div>';
-            $('#parentList'+result.parentId).append(Item);
+            $('#parentList'+result.parentId).append(replyItem);
             $('#childOpinionContent').val('');
         }).fail(function (error){
             alert('등록 실패');
@@ -229,7 +229,70 @@ const main = {
         }).fail(function (error){
             alert('삭제 실패');
         });
-    }
+    },
+
+    createUpdateField : function (id, isParent) {
+
+        if($('#'+id).find('textarea').length === 1) {
+            return;
+        } // 수정창 중복생성 방지
+
+        const content = $('#'+id).find('p').text();
+
+        const replyItem = '<div>' +
+            '               <form class="mt-3">\n' +
+            '                 <textarea class="form-control">'+content+'</textarea>\n' +
+            '               </form>' +
+            '              </div>' +
+            '              <div class="row mt-3">\n' +
+            '                <div class="col text-right">\n' +
+            '                  <button class="btn btn-outline-primary" type="button" onclick="main.updateCancel('+id+')">&nbsp; 취소 &nbsp;</button>' +
+            '                  <button class="btn btn-primary" type="button" onclick="main.updateOpinion('+id+')">&nbsp; 수정 &nbsp;</button>\n' +
+            '                </div>\n' +
+            '              </div>';
+
+        $('#'+id).find('p').parent().hide(); // 텍스트 감추기
+        if(isParent) {
+            $('#'+id).children().last().hide(); // 대댓글 버튼 감추기
+        }
+
+        $('#'+id).append(replyItem); // 수정창 추가
+    },
+
+    updateOpinion : function (id) {
+
+        const data = {
+            content : $('#'+id).find('textarea').val(),
+            id : id
+        };
+
+        if($('#'+id).find('p').html() === data.content) {
+            $('#'+id).find('textarea').focus();
+            alert("댓글을 수정해주세요.");
+            return;
+        }// 수정 안했을 시 수정하도록
+
+        $.ajax({
+            type : 'PUT',
+            url : '/api/v1/opinion/',
+            dateType: 'json',
+            contentType: 'application/json; charset=utf8',
+            data: JSON.stringify(data)
+        }).done(function (id){
+            alert('댓글이 수정되었습니다.');
+            $('#'+id).find('form').parent().remove();
+            $('#'+id).children().last().remove();
+            $('#'+id).children(':hidden').show();
+        }).fail(function (error){
+            alert('수정 실패');
+        });
+    },
+
+    updateCancel : function (id) {
+            $('#'+id).find('form').parent().remove();
+            $('#'+id).children().last().remove();
+            $('#'+id).children(':hidden').show();
+    } // 취소버튼 누르면 숨겨진 요소 보여주고 추가되었던 수정창 삭제
 };
 main.init();
 

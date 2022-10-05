@@ -7,6 +7,7 @@ const main = {
     },
 
     update: function () {
+
         const data = {
             id: $('#postId').val(),
             title: $('#title').val(),

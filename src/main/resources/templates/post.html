@@ -112,7 +112,7 @@
                         </svg>
                       </button>
                       <div class="dropdown-menu dropdown-menu-right">
-                        <button class="dropdown-item" type="button">수정하기</button>
+                        <button class="dropdown-item" type="button" th:data-id="${parent.id}" onclick="main.createUpdateField(this.getAttribute('data-id'), true)">수정하기</button>
                         <button class="dropdown-item" type="button" th:data-id="${parent.id}" onclick="main.deleteOpinion(this.getAttribute('data-id'), true)">삭제하기</button>
                       </div>
                     </th:block><!-- 댓글 설정 -->
@@ -125,7 +125,7 @@
               <th:block th:if="${user != null && user.role.name == 'USER'}">
                 <div class="row">
                   <div class="col text-right">
-                    <button class="btn btn-primary" form="opinion" type="button" th:data-id="${parent.id}" th:data-picture="${user.picture}" onclick="main.createTextField(this.getAttribute('data-id'), this.getAttribute('data-picture'))">대댓글</button>
+                    <button class="btn btn-primary" type="button" th:data-id="${parent.id}" th:data-picture="${user.picture}" onclick="main.createTextField(this.getAttribute('data-id'), this.getAttribute('data-picture'))">대댓글</button>
                   </div>
                 </div>
               </th:block>
@@ -159,7 +159,7 @@
                         </svg>
                       </button>
                       <div class="dropdown-menu dropdown-menu-right">
-                        <button class="dropdown-item" type="button">수정하기</button>
+                        <button class="dropdown-item" type="button" th:data-id="${child.id}" onclick="main.createUpdateField(this.getAttribute('data-id'))">수정하기</button>
                         <button class="dropdown-item" type="button" th:data-id="${child.id}" onclick="main.deleteOpinion(this.getAttribute('data-id'), false)">삭제하기</button>
                       </div>
                     </th:block><!-- 댓글 설정 -->
