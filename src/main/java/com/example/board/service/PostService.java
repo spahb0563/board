@@ -7,15 +7,15 @@ import com.example.board.model.enumclass.CategoryType;
 import com.example.board.model.network.Pagination;
 import com.example.board.model.network.PaginationDto;
 import com.example.board.model.network.dto.post.*;
-import com.example.board.repository.CategoryRepository;
-import com.example.board.repository.PostRepository;
-import com.example.board.repository.UsersRepository;
+import com.example.board.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +29,7 @@ public class PostService {
 
     private final CategoryRepository categoryRepository;
 
-
+    private final RedisTemplate<String, String> redisTemplate;
     @Transactional
     public Long create(PostCreateRequestDto postCreateRequestDto) { //포스트 작성
         Users users = usersRepository.findById(postCreateRequestDto.getUsersId())
@@ -98,4 +98,45 @@ public class PostService {
         return new PaginationDto(postListResponseDto, pagination);
     } //readAll() end
 
+    public int like(Long postId, String userId) {
+        Post post = postRepository.findByIdAndDeletedAtIsNull(postId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. postID : " + postId));
+
+        String likeKey = "postLike:"+post.getId();
+        boolean wasLiked = redisTemplate.opsForSet().isMember(likeKey, userId);
+
+        String dislikeKey = "postDislike:"+post.getId();
+        boolean wasDisliked = redisTemplate.opsForSet().isMember(dislikeKey, userId);
+
+        if(wasLiked) {
+            redisTemplate.opsForSet().remove(likeKey, userId);
+            post.updateLikeCount(-1);
+        }else if(!wasDisliked){
+            redisTemplate.opsForSet().add(likeKey, userId);
+            post.updateLikeCount(1);
+        }
+
+        return post.getLikeCount();
+    }//like() end
+
+    public int dislike(Long postId, String userId) {
+        Post post = postRepository.findByIdAndDeletedAtIsNull(postId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. postID : " + postId));
+
+        String likeKey = "postLike:"+post.getId();
+        boolean wasLiked = redisTemplate.opsForSet().isMember(likeKey, userId);
+
+        String dislikeKey = "postDislike:"+post.getId();
+        boolean wasDisliked = redisTemplate.opsForSet().isMember(dislikeKey, userId);
+
+        if(wasDisliked) {
+            redisTemplate.opsForSet().remove(dislikeKey, userId);
+            post.updateDislikeCount(-1);
+        }else if(!wasLiked){
+            redisTemplate.opsForSet().add(dislikeKey, userId);
+            post.updateDislikeCount(1);
+        }
+
+        return post.getDislikeCount();
+    }//dislike() end
 }

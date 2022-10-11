@@ -1,6 +1,8 @@
 package com.example.board.controller;
 
 
+import com.example.board.config.auth.LoginUser;
+import com.example.board.config.auth.dto.SessionUser;
 import com.example.board.model.network.dto.post.PostCreateRequestDto;
 import com.example.board.model.network.dto.post.PostResponseDto;
 import com.example.board.model.network.dto.post.PostUpdateRequestDto;
@@ -28,6 +30,17 @@ public class PostApiController {
     public Long update(@RequestBody PostUpdateRequestDto postUpdateRequestDto) {
         return postService.update(postUpdateRequestDto);
     }//update() end
+
+    @PutMapping("v1/post/{id}/like")
+    public int like(@LoginUser SessionUser user, @PathVariable Long id) {
+        return postService.like(id, user.getId().toString());
+    }//like() end
+
+    @PutMapping("v1/post/{id}/dislike")
+    public int dislike(@LoginUser SessionUser user, @PathVariable Long id) {
+        return postService.dislike(id, user.getId().toString());
+    }//dislike() end
+
 
     @DeleteMapping("v1/post/{id}")
     public Long delete(@PathVariable Long id) {

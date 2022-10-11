@@ -74,6 +74,10 @@ public class Post {
 
     public void updateOpinionCount(int plusOrMinus) {this.opinionCount+=plusOrMinus;}
 
+    public void updateLikeCount(int plusOrMinus) {this.likeCount+=plusOrMinus;}
+
+    public void updateDislikeCount(int plusOrMinus) {this.dislikeCount+=plusOrMinus;}
+
     public void delete() {
         this.deletedAt = LocalDateTime.now();
     }

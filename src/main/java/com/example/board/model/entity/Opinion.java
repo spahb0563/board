@@ -62,6 +62,10 @@ public class Opinion {
         this.modifiedAt = LocalDateTime.now();
     }
 
+    public void updateLikeCount(int plusOrMinus) {this.likeCount+=plusOrMinus;}
+
+    public void updateDislikeCount(int plusOrMinus) {this.dislikeCount+=plusOrMinus;}
+
     public void delete() {
         this.deletedAt = LocalDateTime.now();
     }

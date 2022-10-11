@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<!-- head start -->
+<head th:replace="fragment/head :: head"></head>
+<link rel="stylesheet" href="/css/register.css">
+<!-- head end -->
+<body>
+<div class="container">
+    <div class="input-form-backgroud row">
+        <div class="input-form col-md-12 mx-auto">
+            <h4 class="mb-3">회원가입</h4>
+            <form class="validation-form" novalidate="">
+                    <div class="mb-3">
+                        <label for="email">이메일</label>
+                        <input type="email" class="form-control" id="email" required="">
+                        <div class="invalid-feedback">
+                            이메일을 입력해주세요.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password">비밀번호</label>
+                        <input type="password" class="form-control" id="password"  required="">
+                        <div class="invalid-feedback">
+                            비밀번호를 입력해 주세요.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="passwordCheck">비밀번호 확인</label>
+                        <input type="password" class="form-control" id="passwordCheck"  required="">
+                        <div class="invalid-feedback">
+                            비밀번호가 다릅니다.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="name">이름</label>
+                        <input type="text" class="form-control" id="name"  required="">
+                        <div class="invalid-feedback">
+                            이름을 입력해주세요.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nickname">닉네임</label>
+                        <input type="text" class="form-control" id="nickname"  required="">
+                        <div class="invalid-feedback">
+                            닉네임을 입력해주세요.
+                        </div>
+                    </div>
+
+                    <hr class="mb-4">
+
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    window.addEventListener('load', () => {
+        const forms = document.getElementsByClassName('validation-form');
+
+        Array.prototype.filter.call(forms, (form) => {
+            form.addEventListener('submit', function (event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+</script>
+</body>
+</html>

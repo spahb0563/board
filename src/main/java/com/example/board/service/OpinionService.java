@@ -6,11 +6,11 @@ import com.example.board.model.entity.Users;
 import com.example.board.model.network.dto.opinion.OpinionCreateRequestDto;
 import com.example.board.model.network.dto.opinion.OpinionResponseDto;
 import com.example.board.model.network.dto.opinion.OpinionUpdateRequestDto;
-import com.example.board.model.network.dto.post.PostResponseDto;
 import com.example.board.repository.OpinionRepository;
 import com.example.board.repository.PostRepository;
 import com.example.board.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +23,8 @@ public class OpinionService {
     private final UsersRepository usersRepository;
 
     private final PostRepository postRepository;
+
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Transactional
     public OpinionResponseDto create(OpinionCreateRequestDto opinionCreateRequestDto) {
@@ -76,6 +78,48 @@ public class OpinionService {
         post.updateOpinionCount(-1); // 게시물 댓글수 감소
         return id;
     }//delete() end
+
+    public int like(Long opinionId, String userId) {
+        Opinion opinion = opinionRepository.findById(opinionId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다. opinionID : " + opinionId));
+
+        String likeKey = "opinionLike:"+opinion.getId();
+        boolean wasLiked = redisTemplate.opsForSet().isMember(likeKey, userId);
+
+        String dislikeKey = "opinionDislike:"+opinion.getId();
+        boolean wasDisliked = redisTemplate.opsForSet().isMember(dislikeKey, userId);
+
+        if(wasLiked) {
+            redisTemplate.opsForSet().remove(likeKey, userId);
+            opinion.updateLikeCount(-1);
+        }else if(!wasDisliked){
+            redisTemplate.opsForSet().add(likeKey, userId);
+            opinion.updateLikeCount(1);
+        }
+
+        return opinion.getLikeCount();
+    }//like() end
+
+    public int dislike(Long opinionId, String userId) {
+        Opinion opinion = opinionRepository.findById(opinionId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다. opinionID : " + opinionId));
+
+        String likeKey = "opinionLike:"+opinion.getId();
+        boolean wasLiked = redisTemplate.opsForSet().isMember(likeKey, userId);
+
+        String dislikeKey = "opinionDislike:"+opinion.getId();
+        boolean wasDisliked = redisTemplate.opsForSet().isMember(dislikeKey, userId);
+
+        if(wasDisliked) {
+            redisTemplate.opsForSet().remove(dislikeKey, userId);
+            opinion.updateDislikeCount(-1);
+        }else if(!wasLiked){
+            redisTemplate.opsForSet().add(dislikeKey, userId);
+            opinion.updateDislikeCount(1);
+        }
+
+        return opinion.getDislikeCount();
+    }//dislike() end
 
 
 }

@@ -1,6 +1,8 @@
 package com.example.board.controller;
 
 
+import com.example.board.config.auth.LoginUser;
+import com.example.board.config.auth.dto.SessionUser;
 import com.example.board.model.network.dto.opinion.OpinionCreateRequestDto;
 import com.example.board.model.network.dto.opinion.OpinionResponseDto;
 import com.example.board.model.network.dto.opinion.OpinionUpdateRequestDto;
@@ -29,6 +31,17 @@ public class OpinionApiController {
     public Long update(@RequestBody OpinionUpdateRequestDto opinionUpdateRequestDto) {
         return opinionService.update(opinionUpdateRequestDto);
     }//update() end
+
+    @PutMapping("v1/opinion/{id}/like")
+    public int like(@LoginUser SessionUser user, @PathVariable Long id) {
+        return opinionService.like(id, user.getId().toString());
+    }//like() end
+
+    @PutMapping("v1/opinion/{id}/dislike")
+    public int dislike(@LoginUser SessionUser user, @PathVariable Long id) {
+        return opinionService.dislike(id, user.getId().toString());
+    }//dislike() end
+
 
     @DeleteMapping("v1/opinion/{id}")
     public Long delete(@PathVariable Long id) {
