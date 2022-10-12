@@ -81,22 +81,31 @@ public class PostService {
     }//delete() end
 
     @Transactional(readOnly = true)
-    public PaginationDto<List<PostListResponseDto>> readAllByCategoryType(CategoryType categoryType, Pageable pageable) { //페이징 처리
+    public PaginationDto readAllByCategoryType(CategoryType categoryType, Pageable pageable) { //페이징 처리
         Page<Post> postList = postRepository.findAllByCategoryTypeAndDeletedAtIsNull(categoryType, pageable);
 
-        List<PostListResponseDto> postListResponseDto = postList.stream()
-                .map(post -> new PostListResponseDto(post))
-                .collect(Collectors.toList());
-
-        Pagination pagination = Pagination.builder() //페이징 처리
-                .totalPages(postList.getTotalPages())  // 전체 페이지 수
-                .totalElements(postList.getTotalElements())  // 전체 요소수
-                .currentPage(postList.getNumber()) // 현재 페이지
-                .currentElements(postList.getNumberOfElements()) // 현재 요소의 순서
-                .build()
-                ;
-        return new PaginationDto(postListResponseDto, pagination);
+        return new PaginationDto(postList);
     } //readAll() end
+
+    @Transactional(readOnly = true)
+    public PaginationDto readAllByCategoryTypeAndKeyword(CategoryType categoryType, String keyword, Pageable pageable) {
+        Page<Post> postList = postRepository.findAllByCategoryTypeAndTitleContainsAndDeletedAtIsNull(categoryType, keyword, pageable);
+
+        return new PaginationDto(postList);
+    }//readAllByCategoryTypeAndKeyword() end
+
+    @Transactional(readOnly = true)
+    public PaginationDto readAllByKeyword(String keyword, Pageable pageable) {
+        Page<Post> postList = postRepository.findAllByTitleContainsAndDeletedAtIsNull(keyword, pageable);
+
+        return new PaginationDto(postList);
+    }//readAllByKeyword end()
+
+    @Transactional(readOnly = true)
+    public PaginationDto readAll(Pageable pageable) {
+        Page<Post> postList = postRepository.findAll(pageable);
+        return new PaginationDto(postList);
+    }//readAll end()
 
     public int like(Long postId, String userId) {
         Post post = postRepository.findByIdAndDeletedAtIsNull(postId)

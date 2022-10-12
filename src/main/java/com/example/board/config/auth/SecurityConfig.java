@@ -21,13 +21,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()//h2-console 화면을 사용하기 위해 해당 옵션들을 disable
                 .and()
                     .authorizeHttpRequests() // URL별 권한 관리를 설정하는 옵션의 시작점, 이게 선언되야만 antMatchers옵션을 사용할 수 있음
-                    .antMatchers("/", "/css/**", "/images/**", "/js/**","/register", "/h2-console/**", "/post/**", "/free", "/humor", "/game", "/sport", "/it", "/question").permitAll()// 권한 관리 대상을 지정하는 옵션
-                    .antMatchers("/**/write").hasRole(UserRole.USER.name())
+                    .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**").permitAll()// 권한 관리 대상을 지정하는 옵션
+                    .antMatchers("/post/write").hasRole(UserRole.USER.name())
                     .antMatchers("/api/v1/**").hasRole(UserRole.USER.name())// URL, HTTP 메소드별로 관리가 가능,
-                    .antMatchers("**/edit").hasRole(UserRole.USER.name())
+                    .antMatchers("/post/**/edit").hasRole(UserRole.USER.name())
                     // "/"등 지정된 URL들은 permitAll() 옵션을 통해 전체 열람 권한을 주었음
                     // "/api/v1/**"주소를 가진 API는 USER권한을 가진 사람만 가능하도록 했음
-                    .anyRequest().authenticated()   // authenticated()을 추가하여 나머지 URL들은 모두 인증된 사용자들에게만 허용하게 함 즉 로그인 한 사용자들
+//                    .anyRequest().authenticated()   // authenticated()을 추가하여 나머지 URL들은 모두 인증된 사용자들에게만 허용하게 함 즉 로그인 한 사용자들
                 .and()
                     .formLogin()
                     .loginPage("/login")

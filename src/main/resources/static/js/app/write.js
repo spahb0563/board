@@ -4,17 +4,25 @@ const main = {
         $('#btn-create').on('click', function () {
             _this.create();
         });
+
+        $(window).on('load', function (){
+            _this.select();
+        });
     },
 
     create: function () {
         const data = {
-            category: $('#category').val().toUpperCase(),
+            category: $('#category option:selected').val(),
             title: $('#title').val(),
             content: $('#content').val().replace(/\n/g, "<br/>"),
             usersId: $('#userId').val()
         };
 
-        if(data.title === '' || data.title.trim() === '') {
+        if(data.category === '게시판을 선택해 주세요.') {
+            alert('게시판을 선택해 주세요.');
+            $('#category').focus();
+            return false;
+        }else if (data.title === '' || data.title.trim() === '') {
             alert('제목을 입력해주세요.');
             $('#title').focus();
             return false;
@@ -40,6 +48,21 @@ const main = {
         }).fail(function (error){
             alert('등록 실패');
         });
+    },
+
+    select : function () {
+        const path = this.getPath().toUpperCase();
+        if($('#category option[value='+path+']').length != 0) {
+            $('#category').val(path).prop("selected", true);
+        }else {
+            $('#category').val('게시판을 선택해 주세요.').prop('selected', true);
+        }
+    },
+
+    getPath : function (){
+        const pre = document.referrer;
+        const path = pre.substring(pre.lastIndexOf('/')+1, pre.length);
+        return path;
     }
 };
 

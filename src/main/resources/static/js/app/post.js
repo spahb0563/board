@@ -11,7 +11,7 @@ const main = {
 
         $('#btn-deletePost').on('click', function () {
             _this.deletePost();
-        })
+        });
 
         $('#btn-like').on('click', function () {
             _this.likePost();
@@ -370,7 +370,7 @@ const main = {
             $('#'+id).find('form').parent().remove();
             $('#'+id).children().last().remove();
             $('#'+id).children(':hidden').show();
-    } // 취소버튼 누르면 숨겨진 요소 보여주고 추가되었던 수정창 삭제
+    }, // 취소버튼 누르면 숨겨진 요소 보여주고 추가되었던 수정창 삭제
 };
 main.init();
 

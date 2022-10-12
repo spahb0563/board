@@ -15,7 +15,13 @@
             <h2>글쓰기</h2>
         </div>
         <form>
-            <input type="hidden" id="category" th:value="${category}">
+            <label for="category">게시판</label>
+            <div class="form-group">
+            <select class="custom-select" id="category">
+                <option selected>게시판을 선택해 주세요.</option>
+                <option th:each="category : ${categoryList}" th:value="${category}" th:text="${category.title}"></option>
+            </select>
+            </div>
             <input type="hidden" id="userId" th:value="${user.id}">
             <div class="form-group">
                 <label for="title">제목</label>
@@ -28,7 +34,7 @@
         </form>
         <div class="row">
             <div class="col text-right">
-                <a class="btn btn-outline-primary" href="./">&nbsp; 취소 &nbsp;</a>
+                <button class="btn btn-outline-primary" onClick="history.go(-1)">&nbsp; 취소 &nbsp;</button>
                 <button class="btn btn-primary" type="submit" id="btn-create">&nbsp; 등록 &nbsp;</button>
             </div>
         </div>

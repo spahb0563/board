@@ -16,4 +16,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Page<Post> findAllByCategoryTypeAndDeletedAtIsNull(CategoryType categoryType, Pageable pageable);
 
+    Page<Post> findAllByCategoryTypeAndTitleContainsAndDeletedAtIsNull(CategoryType categoryType, String keyword, Pageable pageable);
+
+    Page<Post> findAllByTitleContainsAndDeletedAtIsNull(String keyword, Pageable pageable);
+
 }

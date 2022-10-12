@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -25,26 +26,39 @@ public class BoardController {
     private final PostService postService;
 
     @GetMapping("{categoryType}")
-    public String post(@LoginUser SessionUser user, @PathVariable String categoryType, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
-
+    public String postList(@LoginUser SessionUser user, @RequestParam(required = false) String keyword, @PathVariable String categoryType, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
         if(user != null) {
             model.addAttribute("user", user);
         }
+        PaginationDto paginationDto = null;
+        CategoryType category = null;
 
         if(CategoryType.contains(categoryType.toUpperCase())) {
-            PaginationDto paginationDto = postService.readAllByCategoryType(CategoryType.valueOf(categoryType.toUpperCase()), pageable);
-            model.addAttribute("category", CategoryType.valueOf(categoryType.toUpperCase()));
-            model.addAttribute("postList", paginationDto.getData());
-            model.addAttribute("page", paginationDto.getPagination());
-            return "board";
+            category = CategoryType.valueOf(categoryType.toUpperCase());
+            if(keyword == null) {
+                paginationDto = postService.readAllByCategoryType(CategoryType.valueOf(categoryType.toUpperCase()), pageable);
+            }else {
+                paginationDto = postService.readAllByCategoryTypeAndKeyword(CategoryType.valueOf(categoryType.toUpperCase()), keyword, pageable);
+            }
+        }else if(categoryType.equals("all")) {
+            if(keyword == null) {
+                paginationDto = postService.readAll(pageable);
+            }else {
+                paginationDto = postService.readAllByKeyword(keyword, pageable);
+            }
+        }else {
+            return "index";
         }
 
-        return "index";
-    }// post() end
+        model.addAttribute("category", category);
+        model.addAttribute("postList", paginationDto.getPostListResponseDto());
+        model.addAttribute("page", paginationDto.getPagination());
+        return "board";
+    }//postList() end
 
-    @GetMapping("{categoryType}/write")
-    public String write(@LoginUser SessionUser user, @PathVariable String categoryType, Model model) {
-        model.addAttribute("category", categoryType);
+    @GetMapping("post/write")
+    public String write(@LoginUser SessionUser user, Model model) {
+        model.addAttribute("categoryList", CategoryType.values());
         model.addAttribute("user", user);
 
         return "write";
@@ -64,6 +78,7 @@ public class BoardController {
             for(Cookie c : cookies) {
                 if(c.getName().equals(userId+"_visited")) {
                     cookie = c;
+                    break;
                 }
             }
         }
