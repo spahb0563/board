@@ -31,7 +31,7 @@ const main = {
         $.ajax({
             type : 'PUT',
             url : '/api/v1/post',
-            dateType: 'json',
+            dataType: 'json',
             contentType: 'application/json; charset=utf8',
             data: JSON.stringify(data)
         }).done(function (id){

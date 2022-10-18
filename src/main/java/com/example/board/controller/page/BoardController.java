@@ -47,7 +47,7 @@ public class BoardController {
                 paginationDto = postService.readAllByKeyword(keyword, pageable);
             }
         }else {
-            return "index";
+            return "redirect:/";
         }
 
         model.addAttribute("category", category);

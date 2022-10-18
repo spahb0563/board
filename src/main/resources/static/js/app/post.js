@@ -26,7 +26,7 @@ const main = {
         $.ajax({
             type : 'PUT',
             url : '/api/v1/opinion/'+id+'/like',
-            dateType: 'json',
+            dataType: 'json',
             contentType: 'application/json; charset=utf8',
             async: false,
         }).done(function (result){
@@ -41,7 +41,7 @@ const main = {
         $.ajax({
             type : 'PUT',
             url : '/api/v1/opinion/'+id+'/dislike',
-            dateType: 'json',
+            dataType: 'json',
             contentType: 'application/json; charset=utf8',
             async: false,
         }).done(function (result){
@@ -57,7 +57,7 @@ const main = {
         $.ajax({
             type : 'PUT',
             url : '/api/v1/post/'+id+'/like',
-            dateType: 'json',
+            dataType: 'json',
             contentType: 'application/json; charset=utf8',
             async: false,
         }).done(function (result){
@@ -73,7 +73,7 @@ const main = {
         $.ajax({
             type : 'PUT',
             url : '/api/v1/post/'+id+'/dislike',
-            dateType: 'json',
+            dataType: 'json',
             contentType: 'application/json; charset=utf8',
             async: false,
         }).done(function (result){
@@ -84,10 +84,11 @@ const main = {
     },
 
     createParent: function () {
+
         const data = {
             content : $('#opinionContent').val().replace(/\n/g, "<br/>"),
             postId : $('#postId').val(),
-            usersId : $('#userId').val()
+            usersId : userId
         };
 
         if(data.content === '' || data.content.trim() === '') {
@@ -99,7 +100,7 @@ const main = {
         $.ajax({
             type : 'POST',
             url : '/api/v1/opinion',
-            dateType: 'json',
+            dataType: 'json',
             contentType: 'application/json; charset=utf8',
             async: false,
             data: JSON.stringify(data)
@@ -192,7 +193,7 @@ const main = {
             parentId : $('#parentId').val(),
             content : $('#childOpinionContent').val().replace(/\n/g, "<br/>"),
             postId : $('#postId').val(),
-            usersId : $('#userId').val()
+            usersId : userId
         }
 
         if(data.content === '' || data.content.trim() === '') {
@@ -204,7 +205,7 @@ const main = {
         $.ajax({
             type : 'POST',
             url : '/api/v1/opinion',
-            dateType: 'json',
+            dataType: 'json',
             contentType: 'application/json; charset=utf8',
             async: false,
             data: JSON.stringify(data)
@@ -263,7 +264,7 @@ const main = {
         $.ajax({
             type : 'DELETE',
             url : '/api/v1/post/'+id,
-            dateType: 'json',
+            dataType: 'json',
             contentType: 'application/json; charset=utf8',
         }).done(function (id){
             alert('글이 삭제되었습니다.');
@@ -281,7 +282,7 @@ const main = {
         $.ajax({
             type : 'DELETE',
             url : '/api/v1/opinion/'+id,
-            dateType: 'json',
+            dataType: 'json',
             contentType: 'application/json; charset=utf8',
         }).done(function (id){
             alert('댓글이 삭제되었습니다.');
@@ -352,7 +353,7 @@ const main = {
         $.ajax({
             type : 'PUT',
             url : '/api/v1/opinion/',
-            dateType: 'json',
+            dataType: 'json',
             contentType: 'application/json; charset=utf8',
             data: JSON.stringify(data)
         }).done(function (id){

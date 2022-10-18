@@ -22,7 +22,6 @@ public class UsersRepositoryTest {
     @Autowired
     private UsersRepository usersRepository;
 
-
     @Test
     public void saveAndRead() {
         //given

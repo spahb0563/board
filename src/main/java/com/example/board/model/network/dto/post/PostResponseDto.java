@@ -1,6 +1,7 @@
 package com.example.board.model.network.dto.post;
 
 import com.example.board.model.entity.Post;
+import com.example.board.model.enumclass.CategoryType;
 import com.example.board.model.network.dto.opinion.OpinionResponseDto;
 import com.example.board.model.network.dto.users.UsersResponseDto;
 import lombok.Getter;
@@ -16,6 +17,8 @@ public class PostResponseDto {
     private String title;
 
     private String content;
+
+    private CategoryType type;
 
     private int viewCount;
 
@@ -34,6 +37,7 @@ public class PostResponseDto {
     public PostResponseDto(Post entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
+        this.type = entity.getCategory().getType();
         this.content = entity.getContent();
         this.users = new UsersResponseDto(entity.getUsers());
         this.createdAt = entity.getCreatedAt().format(DateTimeFormatter.ofPattern("yy. M. d HH:mm"));

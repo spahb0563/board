@@ -39,7 +39,7 @@ const main = {
         $.ajax({
             type : 'POST',
             url : '/api/v1/post',
-            dateType: 'json',
+            dataType: 'json',
             contentType: 'application/json; charset=utf8',
             data: JSON.stringify(data)
         }).done(function (id){

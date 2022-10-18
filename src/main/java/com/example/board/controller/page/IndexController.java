@@ -17,11 +17,9 @@ public class IndexController {
 
     private final CategoryService categoryService;
 
-    private final HttpSession httpSession;
-
     @GetMapping("")
     public String index(@LoginUser SessionUser user, Model model) {
-        model.addAttribute("categoryList", categoryService.findAllCategoryRecentPost());
+        model.addAttribute("categoryList", categoryService.readAllCategoryRecentPost());
 
         if(user != null) {
             model.addAttribute("user", user);

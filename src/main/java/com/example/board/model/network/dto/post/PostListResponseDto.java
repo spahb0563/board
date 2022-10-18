@@ -25,6 +25,8 @@ public class PostListResponseDto {
 
     private UsersResponseDto users;
 
+    private String categoryTitle;
+
     public PostListResponseDto(Post entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
@@ -32,6 +34,7 @@ public class PostListResponseDto {
         this.opinionCount = entity.getOpinionCount();
         this.createdAt = setTime(entity.getCreatedAt());
         this.users = new UsersResponseDto(entity.getUsers());
+        this.categoryTitle = entity.getCategory().getType().getTitle();
     }
 
     public PostListResponseDto(CategoryMapping categoryMapping) {

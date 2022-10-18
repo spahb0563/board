@@ -3,6 +3,8 @@ package com.example.board.service;
 import com.example.board.model.entity.Opinion;
 import com.example.board.model.entity.Post;
 import com.example.board.model.entity.Users;
+import com.example.board.model.enumclass.NotificationType;
+import com.example.board.model.network.dto.notification.NotificationCreateRequestDto;
 import com.example.board.model.network.dto.opinion.OpinionCreateRequestDto;
 import com.example.board.model.network.dto.opinion.OpinionResponseDto;
 import com.example.board.model.network.dto.opinion.OpinionUpdateRequestDto;
@@ -26,9 +28,9 @@ public class OpinionService {
 
     private final RedisTemplate<String, String> redisTemplate;
 
+    private final NotificationService notificationService;
     @Transactional
     public OpinionResponseDto create(OpinionCreateRequestDto opinionCreateRequestDto) {
-
         Post post = postRepository.findById(opinionCreateRequestDto.getPostId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. postID : " + opinionCreateRequestDto.getPostId()));
 
@@ -36,13 +38,30 @@ public class OpinionService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. userID : " + opinionCreateRequestDto.getUsersId()));
 
         Opinion opinion = null;
+        NotificationType type;
+        Users receiver;
 
         if(opinionCreateRequestDto.getParentId() != null) {
             opinion = opinionRepository.findById(opinionCreateRequestDto.getParentId())
                     .orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다. opinionID : " + opinionCreateRequestDto.getParentId()));
+            type = NotificationType.REPLY;
+            receiver = opinion.getUsers();
+        }else {
+            type = NotificationType.OPINION;
+            receiver = post.getUsers();
         }
 
         Opinion savedOpinion = opinionRepository.save(opinionCreateRequestDto.toEntity(post, users, opinion));
+
+        if(users.getId() != receiver.getId()) {
+            notificationService.create(NotificationCreateRequestDto.builder()
+                    .targetId(savedOpinion.getId())
+                    .sender(users)
+                    .receiver(receiver)
+                    .post(post)
+                    .type(type)
+                    .build());
+        }
 
         post.updateOpinionCount(1); // 게시물 댓글수 증가
 

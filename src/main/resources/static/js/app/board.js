@@ -3,7 +3,7 @@ const main = {
         const _this = this;
 
         $('.page-link').on('click', function () {
-            _this.movePage($(this).html());
+            _this.movePage($(this).val());
         })
 
         $('#sortMenu button').on('click', function () {

@@ -47,6 +47,9 @@ public class Post {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
     private List<Opinion> opinionList;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+    private List<Notification> notificationList;
+
     @CreatedDate
     private LocalDateTime createdAt;
 

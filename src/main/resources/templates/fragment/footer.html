@@ -36,6 +36,7 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- content script -->
+    <script th:if="${user} != null" src="/js/app/header.js"></script>
     <th:block layout:fragment="js"></th:block>
 </footer>
 </html>

@@ -19,7 +19,7 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true) // 메인 화면에 출력될 카테고리별 최신글
-    public List<CategoryListResponseDto> findAllCategoryRecentPost() {
+    public List<CategoryListResponseDto> readAllCategoryRecentPost() {
         List<CategoryMapping> mappingList = categoryRepository.findTopFivePostOfAllCategory();
         List<CategoryListResponseDto> categoryListResponseDto = new ArrayList();
         List<PostListResponseDto> postListResponseDto = new ArrayList();
@@ -42,7 +42,7 @@ public class CategoryService {
         return categoryListResponseDto;
     }// findAllCategoryRecentPost() end
 
-    public List<CategoryListResponseDto> findAll() {
+    public List<CategoryListResponseDto> readAll() {
         return categoryRepository.findAll().stream()
                 .map(category -> new CategoryListResponseDto(category))
                 .collect(Collectors.toList());

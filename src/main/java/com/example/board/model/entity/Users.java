@@ -42,6 +42,12 @@ public class Users extends BaseTimeEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
     private List<Opinion> opinionList;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sender")
+    private List<Notification> sentNotificationList;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "receiver")
+    private List<Notification> receivedNotificationList;
+
     @Builder
     public Users(String name, String email, String nickname, String picture, UserRole role) {
         this.name = name;

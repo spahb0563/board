@@ -1,4 +1,4 @@
-package com.example.board;
+package com.example.board.repository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

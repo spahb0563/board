@@ -58,7 +58,7 @@
                             </div>
                         </div>
                         <div class="mt-1" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
-                            <a class="text-decoration-none text-body" th:href="@{|/post/${post.id}|}"><b th:text="${post.title}"></b></a>
+                            <a class="text-decoration-none text-body" th:href="@{|/post/${post.id}|}"><b th:text="${category == null ? '['+post.categoryTitle+']'+post.title : post.title}"></b></a>
                         </div>
                     </li><!-- 게시물 반복문 -->
                 </ul><!-- 게시물 목록 -->
@@ -69,26 +69,26 @@
                         th:with="start=${T(java.lang.Math).floor((page.currentPage)/5)*5+1},
                         last=${start+4 < page.totalPages ? start+4 : page.totalPages}"> <!--페이지 첫번호, 끝번호 설정-->
                         <li class="page-item" th:classappend="${start == 1} ? 'disabled'">
-                            <a class="page-link" aria-label="Previous" th:href="@{${baseUrl}(page=${start}-1)}"> <!-- << 버튼 href -->
+                            <button class="page-link" aria-label="Previous" th:value="${start}-1"> <!-- << 버튼 href -->
                                 <span aria-hidden="true">&laquo;</span>
-                            </a>
+                            </button>
                         </li>
                         <li class="page-item" th:each="number : ${#numbers.sequence(start, last)}"
                             th:classappend="${number == page.currentPage + 1} ? 'active'"
                             th:if="${start <= last}">
-                            <button class="page-link" th:text="${number}"></button>
+                            <button class="page-link" th:value="${number}" th:text="${number}"></button>
                         </li><!-- 버튼 첫번호부터 끝번호까지 반복문 -->
                         <li class="page-item" th:classappend="${last == page.totalPages} ? 'disabled'">
-                            <a class="page-link" aria-label="Next" th:href="@{${baseUrl}(page=${last}+1)}">
+                            <button class="page-link" aria-label="Next" th:value="${last}+1">
                                 <span aria-hidden="true">&raquo;</span>
-                            </a>
+                            </button>
                         </li>
                     </ul>
                 </nav>
             </div><!-- 페이지 넘버 버튼 -->
             <div class="d-flex justify-content-center">
                 <form class="form-inline mt-2 mr-1">
-                    <input class="form-control mr-sm-2" type="text" th:placeholder="${param.keyword == null} ? '게시판 내에서 검색' : ${param.keyword}" name="keyword">
+                    <input class="form-control mr-sm-2" type="text" th:value="${param.keyword}" placeholder="게시판 내에서 검색" name="keyword">
                     <input class="btn btn-primary" type="submit" value="검색">
                 </form>
             </div>

@@ -14,9 +14,11 @@
 <!-- header end-->
 <main role="main">
   <div class="container px-5" th:with="postId=${post.id}">
-    <input type="hidden" id="userId" th:if="${user != null}" th:value="${user.id}">
+    <div class="border-bottom pb-1">
+      <a th:href="@{|/${#strings.toLowerCase(post.type)}|}" th:text="'['+${post.type.title}+']'" class="text-decoration-none text-body h3"></a>
+    </div>
     <input type="hidden" id="postId" th:value="${postId}">
-    <div>
+    <div class="mt-3">
       <div>
         <div class="d-flex">
           <div>
