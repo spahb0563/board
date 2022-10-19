@@ -1,17 +1,10 @@
 <!doctype html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
->
-<!-- head start -->
-<head th:replace="fragment/head :: head"></head>
-<!-- head end -->
-<style>
-  
-</style>
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 <body>
-<!-- header start-->
-<header th:replace="fragment/header :: header"></header>
-<!-- header end-->
+<th:block layout:fragment="content">
 <main role="main">
   <div class="container px-5" th:with="postId=${post.id}">
     <div class="border-bottom pb-1">
@@ -59,8 +52,7 @@
       </div><!-- 게시물 상단 -->
       <div>
         <div class="border-top border-bottom" style="height: 100%">
-          <div class="py-3">
-            <p th:utext="${post.content}"></p>
+          <div class="py-3 contentField" th:utext="${post.content}">
           </div>
         </div><!-- 게시물 내용 -->
         <div class="row justify-content-center mt-3">
@@ -129,8 +121,7 @@
                   </div>
                 </div>
               </div>
-              <div class="pt-3">
-                <p th:utext="${parent.content}"></p>
+              <div class="pt-3 contentField" th:utext="${parent.content}">
               </div>
               <th:block th:if="${user != null && user.role.name == 'USER'}">
                 <div class="row">
@@ -178,8 +169,7 @@
                   </div>
                 </div>
               </div>
-              <div class="pt-3">
-                <p th:utext="${child.content}"></p>
+              <div class="pt-3 contentField" th:utext="${child.content}">
               </div>
             </div><!-- 자식 댓글 -->
         </div><!-- 부모 댓글 반복문 -->
@@ -187,9 +177,43 @@
     </div>
   </div><!-- container -->
 </main><!-- main -->
-<!-- footer start -->
-<footer th:replace="fragment/footer :: footer"></footer>
-<!-- footer end -->
-<script src="/js/app/post.js"></script>
+</th:block>
+<th:block layout:fragment="script">
+  <script th:src="@{/js/app/post.js}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+  <script th:src="@{/js/app/summernote/summernote-ko-KR.js}"></script>
+  <script>
+    $(document).ready(function() {
+      const ph = $('#opinionContent').attr('placeholder');
+      $('#opinionContent').summernote({
+        placeholder : ph,
+        height : 80,
+        minHeight : null,
+        maxHeight : null,
+        focus : true,
+        lang: 'ko-KR',
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'underline', 'clear']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['table', ['table']],
+          ['insert', ['link', 'picture', 'video']],
+          ['view', ['fullscreen', 'codeview', 'help']],
+        ],
+        callbacks : {
+          onImageUpload : function(files, editor, welEditable) {
+            for (var i = 0; i < files.length; i++) {
+              sendFile(files[i], this);
+            }
+          }}
+      });
+    });
+  </script>
+  <script th:src="@{/js/app/summernote/summernote.js}"></script>
+</th:block>
+<th:block layout:fragment="css">
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+</th:block>
 </body>
 </html>

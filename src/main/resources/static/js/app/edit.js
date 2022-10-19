@@ -11,8 +11,13 @@ const main = {
         const data = {
             id: $('#postId').val(),
             title: $('#title').val(),
-            content: $('#content').val().replace(/\n/g, "<br/>")
+            content: $('#content').val()
         };
+
+        var tmp = data.content.replace(/<(\/?)p>/gi,"");//p태그 제거
+        tmp = tmp.replace(/(<br>)|(<br\/>)/gi,"");//br태그 제거
+        tmp = tmp.replace(/\s/gi,"");//공백제거
+        tmp = tmp.replace(/&nbsp;/gi,"");//공백제거
 
         if(data.title === '' || data.title.trim() === '') {
             alert('제목을 입력해주세요.');
@@ -22,9 +27,12 @@ const main = {
             alert('제목은 50자까지 입력 가능합니다.');
             $('#title').focus();
             return false;
-        }else if(data.content === '' || data.content.trim() === '') {
+        }else if(data.content === $('#content').val()) {
+            alert('내용을 수정해주세요.');
+            return false;
+        }else if(tmp === '') {
             alert('내용을 입력해주세요.');
-            $('#content').focus();
+            $('#content').summernote({focus: true});
             return false;
         }
 

@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <header th:fragment="header">
     <nav class="navbar navbar-expand-xl navbar-light bg-light py-0 mb-5 ml-1 border-bottom">
         <div class="container">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="/static">
                 <img th:src="@{/images/Logo.png}">
             </a>
             <div class="navbar-toggler border-0">
@@ -45,7 +46,7 @@
                             <a class="dropdown-item" href="/register">회 원 가 입</a>
                         </th:block>
                         <th:block th:unless="${user == null}">
-                            <a class="dropdown-item" href="/">내 정 보</a>
+                            <a class="dropdown-item" href="/static">내 정 보</a>
                             <a class="dropdown-item" href="/logout">로 그 아 웃</a>
                         </th:block>
                         <div class="dropdown-divider"></div>

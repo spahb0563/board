@@ -1,14 +1,10 @@
 <!doctype html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
->
-<!-- head start -->
-<head th:replace="fragment/head :: head"></head>
-<!-- head end -->
-<body>
-<!-- header start-->
-<header th:replace="fragment/header :: header"></header>
-<!-- header end-->
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<th:block layout:fragment="content">
+    <!--main start-->
     <main role="main">
         <div class="container-sm" th:with="baseUrl=${category == null ? 'all' :#strings.toLowerCase(category)}">
             <div class="text-center px-5 py-3">
@@ -93,10 +89,10 @@
                 </form>
             </div>
         </div><!-- container end -->
-    </main>
-<!-- footer start -->
-<footer th:replace="fragment/footer :: footer"></footer>
-<!-- footer end -->
-<script src="/js/app/board.js"></script>
+    </main><!-- main end-->
+</th:block>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/app/board.js}"></script>
+</th:block>
 </body>
 </html>

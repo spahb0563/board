@@ -1,41 +1,69 @@
 <!doctype html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
->
-<!-- head start -->
-<head th:replace="fragment/head :: head"></head>
-<!-- head end -->
-<body>
-<!-- header start-->
-<header th:replace="fragment/header :: header"></header>
-<!-- header end-->
-<main role="main">
-    <div class="container px-5">
-        <div class="text-center">
-            <h2>작성글 수정</h2>
-        </div>
-        <form>
-            <input type="hidden" id="postId" th:value="${post.id}">
-            <div class="form-group">
-                <label for="title">제목</label>
-                <input type="text" class="form-control" id="title" th:value="${post.title}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<th:block layout:fragment="content">
+    <!--main start-->
+    <main role="main">
+        <div class="container px-5">
+            <div class="text-center">
+                <h2>작성글 수정</h2>
             </div>
-            <div class="form-group">
-                <label for="content">내용</label>
-                <textarea class="form-control" id="content" rows="30" th:utext="${post.content}"></textarea>
-            </div>
-        </form>
-        <div class="row">
-            <div class="col text-right">
-                <a class="btn btn-outline-primary" href="./">&nbsp; 취소 &nbsp;</a>
-                <button class="btn btn-primary" type="submit" id="btn-update">&nbsp; 수정 &nbsp;</button>
+            <form>
+                <input type="hidden" id="postId" th:value="${post.id}">
+                <div class="form-group">
+                    <label for="title">제목</label>
+                    <input type="text" class="form-control" id="title" th:value="${post.title}">
+                </div>
+                <div class="form-group">
+                    <label for="content">내용</label>
+                    <textarea class="form-control" id="content" rows="30" th:utext="${post.content}"></textarea>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col text-right">
+                    <a class="btn btn-outline-primary" href="./">&nbsp; 취소 &nbsp;</a>
+                    <button class="btn btn-primary" type="submit" id="btn-update">&nbsp; 수정 &nbsp;</button>
+                </div>
             </div>
         </div>
-    </div>
-</main>
-<!-- footer start -->
-<footer th:replace="fragment/footer :: footer"></footer>
-<!-- footer end -->
-<script src="/js/app/edit.js"></script>
+    </main><!-- main end-->
+</th:block>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/app/edit.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <script th:src="@{/js/app/summernote/summernote-ko-KR.js}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#content').summernote({
+                height : 600,
+                minHeight : null,
+                maxHeight : null,
+                focus : true,
+                lang: 'ko-KR',
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']],
+                ],
+                callbacks : {
+                    onImageUpload : function(files, editor, welEditable) {
+                        for (var i = 0; i < files.length; i++) {
+                            sendFile(files[i], this);
+                        }
+                    }}
+            });
+        });
+    </script>
+    <script th:src="@{/js/app/summernote/summernote.js}"></script>
+</th:block>
+<th:block layout:fragment="css">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+</th:block>
 </body>
 </html>

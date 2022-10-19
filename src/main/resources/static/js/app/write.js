@@ -14,9 +14,14 @@ const main = {
         const data = {
             category: $('#category option:selected').val(),
             title: $('#title').val(),
-            content: $('#content').val().replace(/\n/g, "<br/>"),
+            content: $('#content').val(),
             usersId: $('#userId').val()
         };
+
+        var tmp = data.content.replace(/<(\/?)p>/gi,"");//p태그 제거
+        tmp = tmp.replace(/(<br>)|(<br\/>)/gi,"");//br태그 제거
+        tmp = tmp.replace(/\s/gi,"");//공백제거
+        tmp = tmp.replace(/&nbsp;/gi,"");//공백제거
 
         if(data.category === '게시판을 선택해 주세요.') {
             alert('게시판을 선택해 주세요.');
@@ -30,9 +35,9 @@ const main = {
             alert('제목은 50자까지 입력 가능합니다.');
             $('#title').focus();
             return false;
-        }else if(data.content === '' || data.content.trim() === '') {
+        }else if(tmp === '') {
             alert('내용을 입력해주세요.');
-            $('#content').focus();
+            $('#content').summernote({focus: true});
             return false;
         }
 
@@ -61,7 +66,10 @@ const main = {
 
     getPath : function (){
         const pre = document.referrer;
-        const path = pre.substring(pre.lastIndexOf('/')+1, pre.length);
+        let path = pre.substring(pre.lastIndexOf('/')+1, pre.length);
+        if(path.indexOf('?') >= 0) {
+            path = path.substring(0, path.indexOf('?'));
+        }
         return path;
     }
 };
