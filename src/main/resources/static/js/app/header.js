@@ -24,8 +24,16 @@ const header = {
             dataType: 'json',
             contentType: 'application/json; charset=utf8'
         }).done(function (result){
+            let reply = '';
+            if(result.length === 0) {
+                reply +=
+                    '<div class="row m-0" style="height: 325px; width: 100%;">' +
+                    '   <p class="col text-center align-self-center">새로운 알림이 없습니다.</p>' +
+                    '</div>';
+            }
+
             for(let i=0; i<result.length; i++) {
-                let reply = '' +
+                reply +=
                     '<div class="d-flex bg-light notification'+result[i].id+'">' +
                     '   <div class="w-auto">' +
                     '   <a class="h-3 btn btn-light btn-block my-1" href="/post/'+result[i].postId+' #'+result[i].targetId+'">' +
@@ -54,8 +62,8 @@ const header = {
                     '       </button>' +
                     '   </div>' +
                     '</div>';
-                $('#notificationList1, #notificationList2').append(reply);
             }
+            $('#notificationList1, #notificationList2').append(reply);
         });
     },
 
@@ -73,8 +81,6 @@ const header = {
     },
 
     deleteAllNotification : function () {
-
-
         if(!confirm('정말 삭제하시겠습니까?')) {
             return;
         }
@@ -88,6 +94,13 @@ const header = {
             alert('삭제 성공');
             $('#notificationList1').find('div.d-flex').remove();
             $('#notificationList2').find('div.d-flex').remove();
+
+            let reply =
+                '<div class="row m-0" style="height: 325px; width: 100%;">' +
+                '   <p class="col text-center align-self-center">새로운 알림이 없습니다.</p>' +
+                '</div>';
+
+            $('#notificationList1, #notificationList2').append(reply);
         }).fail(function (error){
             alert('삭제 실패');
         });
@@ -107,6 +120,13 @@ const header = {
             alert('삭제 성공');
             $('#notificationList1').find('div.notification'+id).remove();
             $('#notificationList2').find('div.notification'+id).remove();
+            if($('#notificationList1').find('div.d-flex').length === 0) {
+                let reply =
+                    '<div class="row m-0" style="height: 325px; width: 100%;">' +
+                    '   <p class="col text-center align-self-center">새로운 알림이 없습니다.</p>' +
+                    '</div>';
+                $('#notificationList1, #notificationList2').append(reply);
+            }
         }).fail(function (error){
             alert('삭제 실패');
         });

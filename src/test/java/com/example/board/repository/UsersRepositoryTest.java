@@ -66,16 +66,18 @@ public class UsersRepositoryTest {
         List<Users> usersList = usersRepository.findAll();
         Users users = usersList.get(0);
 
-        String newnickname = "newTest";
+        String newName = "newName";
+        String newNickname = "newTest";
         String newPicture = "newPicture";
 
         //when
-        users.update(newnickname, newPicture);
+        users.update(newName, newNickname, newPicture);
 
         //then
         List<Users> newUsersList = usersRepository.findAll();
         Users newUsers = newUsersList.get(0);
-        assertThat(newUsers.getNickname()).isEqualTo(newnickname);
+        assertThat(newUsers.getName()).isEqualTo(newName);
+        assertThat(newUsers.getNickname()).isEqualTo(newNickname);
         assertThat(newUsers.getPicture()).isEqualTo(newPicture);
     }//saveAndUpdate() end
 

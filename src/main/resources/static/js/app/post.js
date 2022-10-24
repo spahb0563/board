@@ -207,7 +207,7 @@ const main = {
             callbacks : {
                 onImageUpload : function(files, editor, welEditable) {
                     for (var i = 0; i < files.length; i++) {
-                        sendFile(files[i], this);
+                        receiveFile(files[i], this);
                     }
                 }}
         });
@@ -382,7 +382,7 @@ const main = {
             callbacks : {
                 onImageUpload : function(files, editor, welEditable) {
                     for (var i = 0; i < files.length; i++) {
-                        sendFile(files[i], this);
+                        receiveFile(files[i], this);
                     }
                 }}
         });

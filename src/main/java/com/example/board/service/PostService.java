@@ -1,21 +1,24 @@
 package com.example.board.service;
 
+import com.example.board.config.redis.CacheKey;
 import com.example.board.model.entity.Category;
 import com.example.board.model.entity.Post;
 import com.example.board.model.entity.Users;
 import com.example.board.model.enumclass.CategoryType;
-import com.example.board.model.network.Pagination;
 import com.example.board.model.network.PaginationDto;
 import com.example.board.model.network.dto.post.*;
-import com.example.board.repository.*;
+import com.example.board.repository.CategoryRepository;
+import com.example.board.repository.PostRepository;
+import com.example.board.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -102,8 +105,24 @@ public class PostService {
     }//readAllByKeyword end()
 
     @Transactional(readOnly = true)
+    @Cacheable(value = CacheKey.DAILY_BEST, key="{#today}")
+    public List<PostBestListResponseDto> readTop40OfDay(LocalDateTime today) {
+        return postRepository
+                .findTop40ByCreatedAtGreaterThanEqualAndDeletedAtIsNullOrderByLikeCountDescViewCountDesc(today)
+                .stream().map(post -> new PostBestListResponseDto(post)).collect(Collectors.toList());
+    }//readTop40 end()
+
+    @Transactional(readOnly = true)
+    @Cacheable(value = CacheKey.WEEKLY_BEST, key="{#week}")
+    public List<PostBestListResponseDto> readTop40OfWeek(LocalDateTime week) {
+        return postRepository
+                .findTop40ByCreatedAtGreaterThanEqualAndDeletedAtIsNullOrderByLikeCountDescViewCountDesc(week)
+                .stream().map(post -> new PostBestListResponseDto(post)).collect(Collectors.toList());
+    }//readTop40OfWeek end()
+
+    @Transactional(readOnly = true)
     public PaginationDto readAll(Pageable pageable) {
-        Page<Post> postList = postRepository.findAll(pageable);
+        Page<Post> postList = postRepository.findAllByDeletedAtIsNull(pageable);
         return new PaginationDto(postList);
     }//readAll end()
 

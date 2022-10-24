@@ -56,22 +56,14 @@ const main = {
     },
 
     select : function () {
-        const path = this.getPath().toUpperCase();
-        if($('#category option[value='+path+']').length != 0) {
-            $('#category').val(path).prop("selected", true);
-        }else {
-            $('#category').val('게시판을 선택해 주세요.').prop('selected', true);
+        const parameter = new URL(location.href).searchParams;
+
+        const category = parameter.get('category').toUpperCase();
+
+        if(category !== 'ALL') {
+            $('#category').val(category).prop("selected", true);
         }
     },
-
-    getPath : function (){
-        const pre = document.referrer;
-        let path = pre.substring(pre.lastIndexOf('/')+1, pre.length);
-        if(path.indexOf('?') >= 0) {
-            path = path.substring(0, path.indexOf('?'));
-        }
-        return path;
-    }
 };
 
 main.init();

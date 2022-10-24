@@ -4,6 +4,8 @@ import com.example.board.model.entity.Users;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.io.Serializable;
+
 @Getter
 public class UsersResponseDto {
 

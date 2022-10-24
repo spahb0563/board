@@ -37,8 +37,7 @@ function toFile(imgUrl, file) {
     return new File([u8arr], file.name, {type:mime});
 }
 
-function sendFile(file, el) {
-
+function receiveFile(file, el) {
     let reader  = new FileReader();
     reader.addEventListener("load", function (e) {
         const image = new Image();
@@ -46,27 +45,32 @@ function sendFile(file, el) {
         image.onload = imageEvent => {
             let url = imageSizeChange(image);
             let newFile = toFile(url, file);
-
-            var form_data = new FormData();
-            form_data.append('file', newFile);
-            $.ajax({
-                data : form_data,
-                type : "POST",
-                url : '/image',
-                cache : false,
-                contentType : false,
-                enctype : 'multipart/form-data',
-                processData : false,
-                success : function(url) {
-                    $(el).summernote('insertImage', url, function($image) {
-                        $image.css('width', "50%");
-                    });
-                }
-            });
+            sendFile(newFile, el);
         };
     }, false);
 
-    if (file) {
+    if (file.name.substring(file.name.lastIndexOf('.')+1, file.name.length) === "gif") {
+        sendFile(file, el);
+    }else{
         reader.readAsDataURL(file);
     }
+}
+
+function sendFile(file, el) {
+    var form_data = new FormData();
+    form_data.append('file', file);
+    $.ajax({
+        data : form_data,
+        type : "POST",
+        url : '/image',
+        cache : false,
+        contentType : false,
+        enctype : 'multipart/form-data',
+        processData : false,
+        success : function(url) {
+            $(el).summernote('insertImage', url, function($image) {
+
+            });
+        }
+    });
 }

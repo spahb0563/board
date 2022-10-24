@@ -39,7 +39,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             "                          WHERE  category_id = 1\n" +
             "                                 AND deleted_at IS NULL\n" +
             "                          ORDER  BY id DESC\n" +
-            "                          LIMIT  5)\n" +
+            "                          LIMIT  5) p1\n" +
             "                  UNION ALL\n" +
             "                  SELECT *\n" +
             "                  FROM   (SELECT id,\n" +
@@ -53,7 +53,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             "                          WHERE  category_id = 2\n" +
             "                                 AND deleted_at IS NULL\n" +
             "                          ORDER  BY id DESC\n" +
-            "                          LIMIT  5)\n" +
+            "                          LIMIT  5) p2\n" +
             "                  UNION ALL\n" +
             "                  SELECT *\n" +
             "                  FROM   (SELECT id,\n" +
@@ -67,7 +67,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             "                          WHERE  category_id = 3\n" +
             "                                 AND deleted_at IS NULL\n" +
             "                          ORDER  BY id DESC\n" +
-            "                          LIMIT  5)\n" +
+            "                          LIMIT  5) p3\n" +
             "                  UNION ALL\n" +
             "                  SELECT *\n" +
             "                  FROM   (SELECT id,\n" +
@@ -81,7 +81,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             "                          WHERE  category_id = 4\n" +
             "                                 AND deleted_at IS NULL\n" +
             "                          ORDER  BY id DESC\n" +
-            "                          LIMIT  5)\n" +
+            "                          LIMIT  5) p4\n" +
             "                  UNION ALL\n" +
             "                  SELECT *\n" +
             "                  FROM   (SELECT id,\n" +
@@ -95,7 +95,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             "                          WHERE  category_id = 5\n" +
             "                                 AND deleted_at IS NULL\n" +
             "                          ORDER  BY id DESC\n" +
-            "                          LIMIT  5)\n" +
+            "                          LIMIT  5) p5\n" +
             "                  UNION ALL\n" +
             "                  SELECT *\n" +
             "                  FROM   (SELECT id,\n" +
@@ -109,9 +109,23 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             "                          WHERE  category_id = 6\n" +
             "                                 AND deleted_at IS NULL\n" +
             "                          ORDER  BY id DESC\n" +
-            "                          LIMIT  5)) p\n" +
+            "                          LIMIT  5) p6\n" +
+            "                  UNION ALL\n" +
+            "                  SELECT *\n" +
+            "                  FROM   (SELECT id,\n" +
+            "                                 title,\n" +
+            "                                 view_count,\n" +
+            "                                 opinion_count,\n" +
+            "                                 created_at,\n" +
+            "                                 category_id,\n" +
+            "                                 users_id\n" +
+            "                          FROM   post\n" +
+            "                          WHERE  category_id = 7\n" +
+            "                                 AND deleted_at IS NULL\n" +
+            "                          ORDER  BY id DESC\n" +
+            "                          LIMIT  5) p7) p\n" +
             "              ON c.id = p.category_id\n" +
-            "       JOIN users u\n" +
-            "         ON p.users_id = u.id", nativeQuery = true)
+            "       LEFT JOIN users u\n" +
+            "         ON p.users_id = u.id;\n", nativeQuery = true)
     List<CategoryMapping> findTopFivePostOfAllCategory();
 }

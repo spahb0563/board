@@ -1,10 +1,12 @@
 package com.example.board.model.network.dto.post;
 
 import com.example.board.model.entity.Post;
+import com.example.board.model.enumclass.CategoryType;
 import com.example.board.model.network.dto.category.CategoryMapping;
 import com.example.board.model.network.dto.users.UsersResponseDto;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,7 +27,7 @@ public class PostListResponseDto {
 
     private UsersResponseDto users;
 
-    private String categoryTitle;
+    private CategoryType categoryType;
 
     public PostListResponseDto(Post entity) {
         this.id = entity.getId();
@@ -34,7 +36,7 @@ public class PostListResponseDto {
         this.opinionCount = entity.getOpinionCount();
         this.createdAt = setTime(entity.getCreatedAt());
         this.users = new UsersResponseDto(entity.getUsers());
-        this.categoryTitle = entity.getCategory().getType().getTitle();
+        this.categoryType = entity.getCategory().getType();
     }
 
     public PostListResponseDto(CategoryMapping categoryMapping) {

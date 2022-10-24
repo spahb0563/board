@@ -3,12 +3,14 @@ package com.example.board.controller;
 
 import com.example.board.config.auth.LoginUser;
 import com.example.board.config.auth.dto.SessionUser;
-import com.example.board.model.network.dto.post.PostCreateRequestDto;
-import com.example.board.model.network.dto.post.PostResponseDto;
-import com.example.board.model.network.dto.post.PostUpdateRequestDto;
+import com.example.board.model.network.dto.post.*;
 import com.example.board.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -41,9 +43,13 @@ public class PostApiController {
         return postService.dislike(id, user.getId().toString());
     }//dislike() end
 
-
     @DeleteMapping("v1/post/{id}")
     public Long delete(@PathVariable Long id) {
         return postService.delete(id);
     }//delete() end
+
+//    @GetMapping("v1/post/best")
+//    public List<PostBestListResponseDto> readTop10() {
+//        return postService.readTop40(LocalDateTime.now().with(LocalTime.MIN));
+//    }
 }

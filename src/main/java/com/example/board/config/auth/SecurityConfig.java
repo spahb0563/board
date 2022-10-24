@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/post/**/edit").hasRole(UserRole.USER.name())
                     // "/"등 지정된 URL들은 permitAll() 옵션을 통해 전체 열람 권한을 주었음
                     // "/api/v1/**"주소를 가진 API는 USER권한을 가진 사람만 가능하도록 했음
-//                    .anyRequest().authenticated()   // authenticated()을 추가하여 나머지 URL들은 모두 인증된 사용자들에게만 허용하게 함 즉 로그인 한 사용자들
+//                    .anyRequest().   // authenticated()을 추가하여 나머지 URL들은 모두 인증된 사용자들에게만 허용하게 함 즉 로그인 한 사용자들
                 .and()
                     .formLogin()
                     .loginPage("/login")

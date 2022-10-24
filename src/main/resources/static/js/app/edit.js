@@ -24,11 +24,8 @@ const main = {
             $('#title').focus();
             return false;
         }else if(data.title.length > 50) {
-            alert('제목은 50자까지 입력 가능합니다.');
+            alert('제목은 80자까지 입력 가능합니다.');
             $('#title').focus();
-            return false;
-        }else if(data.content === $('#content').val()) {
-            alert('내용을 수정해주세요.');
             return false;
         }else if(tmp === '') {
             alert('내용을 입력해주세요.');

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @RequiredArgsConstructor
 @Controller
@@ -25,7 +27,7 @@ public class BoardController {
 
     private final PostService postService;
 
-    @GetMapping("{categoryType}")
+    @GetMapping("/{categoryType}")
     public String postList(@LoginUser SessionUser user, @RequestParam(required = false) String keyword, @PathVariable String categoryType, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
         if(user != null) {
             model.addAttribute("user", user);
@@ -50,6 +52,8 @@ public class BoardController {
             return "redirect:/";
         }
 
+        model.addAttribute("dailyBestList", postService.readTop40OfDay(LocalDateTime.now().with(LocalTime.MIN)));
+        model.addAttribute("weeklyBestList", postService.readTop40OfWeek(LocalDateTime.now().minusDays(6).with(LocalTime.MIN)));
         model.addAttribute("category", category);
         model.addAttribute("postList", paginationDto.getPostListResponseDto());
         model.addAttribute("page", paginationDto.getPagination());
@@ -110,5 +114,5 @@ public class BoardController {
         model.addAttribute("post", postService.readEdit(id));
 
         return "edit";
-    }
+    }// edit() end
 }
