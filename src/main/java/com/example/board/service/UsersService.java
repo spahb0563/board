@@ -32,9 +32,7 @@ public class UsersService {
         Users user = usersRepository.findById(usersUpdateRequestDto.getId())
                 .orElseThrow(() -> new IllegalArgumentException("없는 유저입니다. userId : " + usersUpdateRequestDto.getId()));
 
-        user.update(usersUpdateRequestDto.getName(), usersUpdateRequestDto.getNickname(), usersUpdateRequestDto.getPicture());
-
-        httpSession.setAttribute("user", new SessionUser(user));
+        httpSession.setAttribute("user", new SessionUser(user.update(usersUpdateRequestDto.getName(), usersUpdateRequestDto.getNickname(), usersUpdateRequestDto.getPicture())));
 
         return user.getId();
     }

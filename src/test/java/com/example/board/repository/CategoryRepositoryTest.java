@@ -52,11 +52,11 @@ public class CategoryRepositoryTest {
         assertThat(categoryRepository.findAll()).isEmpty();
     }//saveAndDelete() end
 
-    @Test
-    public void findAll() {
-        categoryRepository.findTopFivePostOfAllCategory().stream().forEach(categoryMapping -> {
-            System.out.println(categoryMapping.getCategoryType());
-            System.out.println(categoryMapping.getPostId());
-        });
-    }
+//    @Test
+//    public void findAll() {
+//        categoryRepository.findTopFivePostOfAllCategory().stream().forEach(categoryMapping -> {
+//            System.out.println(categoryMapping.getCategoryType());
+//            System.out.println(categoryMapping.getPostId());
+//        });
+//    }
 }

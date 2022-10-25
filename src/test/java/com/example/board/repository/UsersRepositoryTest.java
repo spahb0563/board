@@ -28,14 +28,16 @@ public class UsersRepositoryTest {
         String name = "Test";
         String email = "Test@Test.com";
         String nickname = "Test";
+        String picture = "Test";
         UserRole role = UserRole.USER;
 
         usersRepository.save(Users.builder()
-                        .name(name)
-                        .email(email)
-                        .nickname(nickname)
-                        .role(role)
-                        .build());
+                .name(name)
+                .email(email)
+                .nickname(nickname)
+                .picture(picture)
+                .role(role)
+                .build());
 
         //when
         List<Users> usersList = usersRepository.findAll();
@@ -54,12 +56,14 @@ public class UsersRepositoryTest {
         String name = "Test";
         String email = "Test@Test.com";
         String nickname = "Test";
+        String picture = "Test";
         UserRole role = UserRole.USER;
 
         usersRepository.save(Users.builder()
                 .name(name)
                 .email(email)
                 .nickname(nickname)
+                .picture(picture)
                 .role(role)
                 .build());
 
@@ -87,12 +91,14 @@ public class UsersRepositoryTest {
         String name = "Test";
         String email = "Test@Test.com";
         String nickname = "Test";
+        String picture = "Test";
         UserRole role = UserRole.USER;
 
         usersRepository.save(Users.builder()
                 .name(name)
                 .email(email)
                 .nickname(nickname)
+                .picture(picture)
                 .role(role)
                 .build());
 

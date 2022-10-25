@@ -23,6 +23,8 @@ public class Users extends BaseTimeEntity {
     @Column(nullable = false)
     private String name;
 
+    private String password;
+
     @Column(nullable = false)
     private String email;
 
@@ -49,9 +51,10 @@ public class Users extends BaseTimeEntity {
     private List<Notification> receivedNotificationList;
 
     @Builder
-    public Users(String name, String email, String nickname, String picture, UserRole role) {
+    public Users(String name, String password, String email, String nickname, String picture, UserRole role) {
         this.name = name;
         this.email = email;
+        this.password = password;
         this.nickname = nickname;
         this.picture = picture;
         this.role = role;
