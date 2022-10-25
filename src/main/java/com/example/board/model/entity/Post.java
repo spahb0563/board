@@ -15,6 +15,7 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @NoArgsConstructor
+@Table(indexes = @Index(name="title", columnList = "title"))
 @Entity
 public class Post {
     @Id

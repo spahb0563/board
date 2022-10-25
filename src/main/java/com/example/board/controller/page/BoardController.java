@@ -1,7 +1,7 @@
 package com.example.board.controller.page;
 
-import com.example.board.config.auth.LoginUser;
-import com.example.board.config.auth.dto.SessionUser;
+import com.example.board.security.LoginUser;
+import com.example.board.security.dto.SessionUser;
 import com.example.board.model.enumclass.CategoryType;
 import com.example.board.model.network.PaginationDto;
 import com.example.board.service.PostService;
@@ -28,7 +28,7 @@ public class BoardController {
     private final PostService postService;
 
     @GetMapping("/{categoryType}")
-    public String postList(@LoginUser SessionUser user, @RequestParam(required = false) String keyword, @PathVariable String categoryType, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+    public String postList(@LoginUser SessionUser user, @RequestParam(required = false) String keyword, @PathVariable String categoryType, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model, HttpServletRequest request) {
         if(user != null) {
             model.addAttribute("user", user);
         }
@@ -55,7 +55,7 @@ public class BoardController {
         model.addAttribute("dailyBestList", postService.readTop40OfDay(LocalDateTime.now().with(LocalTime.MIN)));
         model.addAttribute("weeklyBestList", postService.readTop40OfWeek(LocalDateTime.now().minusDays(6).with(LocalTime.MIN)));
         model.addAttribute("category", category);
-        model.addAttribute("postList", paginationDto.getPostListResponseDto());
+        model.addAttribute("postList", paginationDto.getData());
         model.addAttribute("page", paginationDto.getPagination());
         return "board";
     }//postList() end

@@ -14,19 +14,15 @@
     <main role="main">
         <div class="container-sm" th:with="baseUrl=${category == null ? 'all' :#strings.toLowerCase(category)}">
             <div class="row flex-row-reverse">
-                <div class="col-md-3 pt-5">
+                <div class="col-md-3 pt-5 px-0">
                     <div class="mb-3">
                         <div>
                             <h3 class="font-weight-bold">일일 베스트</h3>
                         </div>
                         <div>
                             <div id="dailyBest" class="carousel slide" data-ride="carousel" data-interval="false" style="height: 410px">
-                                <ol class="carousel-indicators">
-                                    <li data-target="#dailyBest" data-slide-to="0" class="active"></li>
-                                    <li data-target="#dailyBest" data-slide-to="1"></li>
-                                    <li data-target="#dailyBest" data-slide-to="2"></li>
-                                    <li data-target="#dailyBest" data-slide-to="3"></li>
-                                    <li data-target="#dailyBest" data-slide-to="4"></li>
+                                <ol class="carousel-indicators" th:with="last=${T(java.lang.Math).ceil(#lists.size(dailyBestList)*1.0/8)}">
+                                    <li data-target="#dailyBest" th:if="${last > 0}" th:each="num : ${#numbers.sequence(1, last)}" th:data-slide-to="${num}-1" th:classappend="${num == 1 ? 'active' : ''}"></li>
                                 </ol>
                                 <div class="carousel-inner">
                                     <div class="carousel-item" th:each="num : ${#numbers.sequence(1,5)}" th:classappend="${num == 1 ? 'active' : ''}">
@@ -34,8 +30,8 @@
                                             <li class="list-group-item pb-1 px-0 mb-1" th:each="dailyBest, i: ${dailyBestList}" th:if="${8*(num+(-1)) < i.count && i.count <= 8*num}">
                                                 <div class="d-flex">
                                                     <div class="w-75" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
-                                                        <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis">
-                                                            <span style="min-width: 50px" th:classappend="${dailyBest.categoryType.color}" th:text="${dailyBest.categoryType.title}"></span>
+                                                        <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                            <span style="min-width: 50px;" th:classappend="${dailyBest.categoryType.color}" th:text="${dailyBest.categoryType.title}"></span>
                                                             <a class="text-decoration-none text-body" th:href="@{|/post/${dailyBest.id}|}" ><b th:text="${dailyBest.title}"></b></a>
                                                         </div>
                                                     </div>
@@ -61,12 +57,8 @@
                         </div>
                         <div>
                             <div id="weeklyBest" class="carousel slide" data-ride="carousel" data-interval="false" style="height: 410px">
-                                <ol class="carousel-indicators">
-                                    <li data-target="#weeklyBest" data-slide-to="0" class="active"></li>
-                                    <li data-target="#weeklyBest" data-slide-to="1"></li>
-                                    <li data-target="#weeklyBest" data-slide-to="2"></li>
-                                    <li data-target="#weeklyBest" data-slide-to="3"></li>
-                                    <li data-target="#weeklyBest" data-slide-to="4"></li>
+                                <ol class="carousel-indicators" th:with="last=${T(java.lang.Math).ceil(#lists.size(weeklyBestList)*1.0/8)}">
+                                    <li data-target="#weeklyBest" th:if="${last > 0}" th:each="num : ${#numbers.sequence(1, last)}" th:data-slide-to="${num}-1" th:classappend="${num == 1 ? 'active' : ''}"></li>
                                 </ol>
                                 <div class="carousel-inner">
                                     <div class="carousel-item" th:each="num : ${#numbers.sequence(1,5)}" th:classappend="${num == 1 ? 'active' : ''}">

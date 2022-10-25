@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<nav th:fragment="nav" id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse border-right">
+  <div class="sidebar-sticky">
+    <div class="mb-5 text-center"><h2>내 정보</h2></div>
+    <ul class="nav flex-column text-center">
+      <li class="nav-item my-3">
+        <a class="nav-link text-dark" href="/users/mypage/profile">
+          프로필
+        </a>
+      </li>
+      <li class="nav-item my-3">
+        <a class="nav-link text-dark" href="/users/mypage/mypost">
+          MY 글
+        </a>
+      </li>
+      <li class="nav-item my-3">
+        <a class="nav-link text-dark" href="/users/mypage/myopinion">
+          MY 댓글
+        </a>
+      </li>
+      <li class="nav-item my-3">
+        <a class="nav-link text-dark" href="/users/mypage/notification">
+          알림
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+</html>

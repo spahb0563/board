@@ -1,4 +1,4 @@
-package com.example.board.config.auth.dto;
+package com.example.board.security.dto;
 
 import com.example.board.model.entity.Users;
 import com.example.board.model.enumclass.UserRole;

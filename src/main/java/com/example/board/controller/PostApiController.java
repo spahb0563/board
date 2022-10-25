@@ -1,16 +1,12 @@
 package com.example.board.controller;
 
 
-import com.example.board.config.auth.LoginUser;
-import com.example.board.config.auth.dto.SessionUser;
+import com.example.board.security.LoginUser;
+import com.example.board.security.dto.SessionUser;
 import com.example.board.model.network.dto.post.*;
 import com.example.board.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController

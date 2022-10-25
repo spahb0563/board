@@ -81,6 +81,11 @@ const header = {
     },
 
     deleteAllNotification : function () {
+        if($('#notificationList1').find('div.d-flex').length === 0) {
+            alert("삭제할 알림이 없습니다.");
+            return false;
+        }
+
         if(!confirm('정말 삭제하시겠습니까?')) {
             return;
         }

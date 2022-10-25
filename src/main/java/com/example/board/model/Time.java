@@ -1,6 +1,8 @@
 package com.example.board.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public class Time {
@@ -38,6 +40,19 @@ public class Time {
 
         diffTime = diffTime / MONTH;
         return diffTime + "년 전";
+    }
+
+    public static String setTime(LocalDateTime time) {
+        LocalDate now = LocalDate.now();
+        if(now.isEqual(time.toLocalDate())) {
+            return DateTimeFormatter.ofPattern("HH:mm").format(time);
+        }else {
+            if(now.getYear() == time.getYear()) {
+                return time.format(DateTimeFormatter.ofPattern("M. d HH:mm"));
+            }else {
+                return time.format(DateTimeFormatter.ofPattern("yy. M. d HH:mm"));
+            }
+        }
     }
 }
 

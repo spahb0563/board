@@ -1,6 +1,6 @@
-package com.example.board.config.auth;
+package com.example.board.security;
 
-import com.example.board.config.auth.dto.SessionUser;
+import com.example.board.security.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;

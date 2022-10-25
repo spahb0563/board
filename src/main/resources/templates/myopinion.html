@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<th:block layout:fragment="content">
+    <!--main start-->
+    <main role="main">
+        <div class="container-sm">
+            <div class="row">
+                <nav th:replace="fragment/nav :: nav"></nav>
+                <div class="col-md-9">
+                    <h2>MY 댓글</h2>
+                    <div class="border-top pt-5">
+                        <div class="px-3 mb-5">
+                            <ul class="list-group list-group-flush border-bottom">
+                                <li class="list-group-item pb-1 mb-1 px-0" th:each="opinion : ${opinionList}">
+                                    <div class="mt-1" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        <a class="text-decoration-none text-body" th:text="${opinion.postTitle}" th:href="@{|/post/${opinion.postId}|}"></a>
+                                        <span>에 작성한 댓글</span>
+                                        <span>·</span>
+                                        <span class="mx-1 text-muted" th:text="${opinion.createdAt}"></span>
+                                    </div>
+                                    <div class="mt-1" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        <a class="text-decoration-none text-body" th:href="@{|/post/${opinion.postId}#${opinion.id}|}"><b th:text="${opinion.content}"></b></a>
+                                    </div>
+                                </li><!-- 댓글 반복문 -->
+                            </ul><!-- 댓글 목록 -->
+                        </div>
+                        <div>
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center"
+                                    th:with="start=${T(java.lang.Math).floor((page.currentPage)/5)*5+1},
+                                last=${start+4 < page.totalPages ? start+4 : page.totalPages}"> <!--페이지 첫번호, 끝번호 설정-->
+                                    <li class="page-item" th:classappend="${start == 1} ? 'disabled'">
+                                        <button class="page-link" aria-label="Previous" th:value="${start}-1"> <!-- << 버튼 href -->
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </button>
+                                    </li>
+                                    <li class="page-item" th:each="number : ${#numbers.sequence(start, last)}"
+                                        th:classappend="${number == page.currentPage + 1} ? 'active'"
+                                        th:if="${start <= last}">
+                                        <button class="page-link" th:value="${number}" th:text="${number}"></button>
+                                    </li><!-- 버튼 첫번호부터 끝번호까지 반복문 -->
+                                    <li class="page-item" th:classappend="${last == page.totalPages} ? 'disabled'">
+                                        <button class="page-link" aria-label="Next" th:value="${last}+1">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div><!-- 페이지 넘버 버튼 -->
+                    </div>
+                </div>
+            </div><!-- row end -->
+        </div><!-- container end -->
+    </main><!-- main end-->
+</th:block>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/app/mypage.js}"></script>
+</th:block>
+</body>
+</html>

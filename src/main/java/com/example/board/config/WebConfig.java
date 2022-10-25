@@ -1,7 +1,7 @@
 package com.example.board.config;
 
 
-import com.example.board.config.auth.LoginUserArgumentResolver;
+import com.example.board.security.LoginUserArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

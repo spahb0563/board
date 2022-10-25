@@ -1,4 +1,4 @@
-package com.example.board.config.auth;
+package com.example.board.security;
 
 
 import java.lang.annotation.ElementType;

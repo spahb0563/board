@@ -47,7 +47,10 @@
                             <a class="dropdown-item" href="/register">회 원 가 입</a>
                         </th:block>
                         <th:block sec:authorize="isAuthenticated()">
-                            <a class="dropdown-item" href="/">내 정 보</a>
+                            <a class="dropdown-item" type="button" href="/users/mypage/profile">프 로 필</a>
+                            <a class="dropdown-item" type="button" href="/users/mypage/mypost">MY 글</a>
+                            <a class="dropdown-item" type="button" href="/users/mypage/myopinion">MY 댓 글</a>
+                            <a class="dropdown-item" type="button" href="/users/mypage/notification">알 림</a>
                             <a class="dropdown-item" href="/logout">로 그 아 웃</a>
                         </th:block>
                         <div class="dropdown-divider"></div>
@@ -78,7 +81,7 @@
                         <a class="nav-link text-dark" href="/it">I T</a>
                     </li>
                     <li class="nav-item mx-1">
-                        <a class="nav-link text-dark" href="/question">요 리</a>
+                        <a class="nav-link text-dark" href="/food">요 리</a>
                     </li>
                     <li class="nav-item mx-1">
                         <a class="nav-link text-dark" href="/question">질 문</a>
@@ -113,11 +116,13 @@
                         <button class="border-0" data-toggle="dropdown" style="background-color: transparent;">
                             <img class="rounded-circle" style="width: 50px; height: 50px" th:src="${user.picture}" onerror="this.src='/images/anonymous.png'">
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" type="button" href="/users/mypage">내 정보</a>
-                            <button class="dropdown-item" type="button">Something else here</button>
+                        <div class="dropdown-menu dropdown-menu-right text-center">
+                            <a class="dropdown-item" type="button" href="/users/mypage/profile">프 로 필</a>
+                            <a class="dropdown-item" type="button" href="/users/mypage/mypost">MY 글</a>
+                            <a class="dropdown-item" type="button" href="/users/mypage/myopinion">MY 댓 글</a>
+                            <a class="dropdown-item" type="button" href="/users/mypage/notification">알 림</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/logout">로그아웃</a>
+                            <a class="dropdown-item" href="/logout">로 그 아 웃</a>
                         </div>
                     </div>
                 </th:block>

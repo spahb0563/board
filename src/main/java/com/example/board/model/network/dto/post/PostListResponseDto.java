@@ -1,16 +1,11 @@
 package com.example.board.model.network.dto.post;
 
+import com.example.board.model.Time;
 import com.example.board.model.entity.Post;
 import com.example.board.model.enumclass.CategoryType;
 import com.example.board.model.network.dto.category.CategoryMapping;
 import com.example.board.model.network.dto.users.UsersResponseDto;
 import lombok.Getter;
-
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 
 @Getter
 public class PostListResponseDto {
@@ -34,7 +29,7 @@ public class PostListResponseDto {
         this.title = entity.getTitle();
         this.viewCount = entity.getViewCount();
         this.opinionCount = entity.getOpinionCount();
-        this.createdAt = setTime(entity.getCreatedAt());
+        this.createdAt = Time.setTime(entity.getCreatedAt());
         this.users = new UsersResponseDto(entity.getUsers());
         this.categoryType = entity.getCategory().getType();
     }
@@ -44,19 +39,10 @@ public class PostListResponseDto {
         this.title = categoryMapping.getPostTitle();
         this.opinionCount = categoryMapping.getPostOpinionCount();
         this.viewCount = categoryMapping.getPostViewCount();
-        this.createdAt = setTime(categoryMapping.getPostCreatedAt());
+        this.createdAt = Time.setTime(categoryMapping.getPostCreatedAt());
         this.users = UsersResponseDto.builder()
                 .nickname(categoryMapping.getUsersNickname())
                 .picture(categoryMapping.getUsersPicture())
                 .build();
-    }
-
-    public String setTime(LocalDateTime time) {
-        LocalDate now = LocalDate.now();
-        if(now.isEqual(time.toLocalDate())) {
-            return DateTimeFormatter.ofPattern("HH:mm").format(time);
-        }else {
-            return time.format(DateTimeFormatter.ofPattern("yy. M. d HH:mm"));
-        }
     }
 }

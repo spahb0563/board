@@ -1,11 +1,13 @@
-package com.example.board.config.auth;
+package com.example.board.security;
 
 
 import com.example.board.model.enumclass.UserRole;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -13,6 +15,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomOAuth2UserService customOAuth2UserService;
 
+    private final AuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -38,8 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .oauth2Login()
                         .loginPage("/login")
-                            .defaultSuccessUrl("/", true)
-                                .userInfoEndpoint() // 로그인 성공 이후 사용자 정보를 가져올 때의 설정들을 담당
-                                    .userService(customOAuth2UserService);  //소셜 로그인 성공시 후속조치를 진행할 UserService 인터페이스의 구현체를 등록
+                            .defaultSuccessUrl("/")
+                                .successHandler(customAuthenticationSuccessHandler)
+                                    .userInfoEndpoint() // 로그인 성공 이후 사용자 정보를 가져올 때의 설정들을 담당
+                                        .userService(customOAuth2UserService);  //소셜 로그인 성공시 후속조치를 진행할 UserService 인터페이스의 구현체를 등록
     }
 }

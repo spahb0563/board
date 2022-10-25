@@ -22,9 +22,13 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Page<Post> findAllByCategoryTypeAndDeletedAtIsNull(CategoryType categoryType, Pageable pageable);
 
-    Page<Post> findAllByCategoryTypeAndTitleContainsAndDeletedAtIsNull(CategoryType categoryType, String keyword, Pageable pageable);
+    Page<Post> findAllByUsersIdAndDeletedAtIsNull(Long userId, Pageable pageable);
 
-    Page<Post> findAllByTitleContainsAndDeletedAtIsNull(String keyword, Pageable pageable);
+    @Query(value = "SELECT p.* FROM post p left outer join category c on p.category_id = c.id WHERE c.type = ?1 AND MATCH(title) AGAINST (?2 IN BOOLEAN MODE) AND deleted_at IS NULL", nativeQuery = true)
+    Page<Post> findAllByCategoryTypeAndKeyword(String categoryType, String keyword, Pageable pageable);
+
+    @Query(value = "SELECT * FROM post WHERE MATCH(title) AGAINST (?1 IN BOOLEAN MODE) AND deleted_at IS NULL", nativeQuery = true)
+    Page<Post> findAllByKeyword(String keyword, Pageable pageable);
 
     List<Post> findTop40ByCreatedAtGreaterThanEqualAndDeletedAtIsNullOrderByLikeCountDescViewCountDesc(LocalDateTime localDateTime);
 }

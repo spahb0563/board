@@ -4,17 +4,25 @@ import com.example.board.model.entity.Opinion;
 import com.example.board.model.entity.Post;
 import com.example.board.model.entity.Users;
 import com.example.board.model.enumclass.NotificationType;
+import com.example.board.model.network.Pagination;
+import com.example.board.model.network.PaginationDto;
 import com.example.board.model.network.dto.notification.NotificationCreateRequestDto;
 import com.example.board.model.network.dto.opinion.OpinionCreateRequestDto;
+import com.example.board.model.network.dto.opinion.OpinionListResponseDto;
 import com.example.board.model.network.dto.opinion.OpinionResponseDto;
 import com.example.board.model.network.dto.opinion.OpinionUpdateRequestDto;
 import com.example.board.repository.OpinionRepository;
 import com.example.board.repository.PostRepository;
 import com.example.board.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -74,6 +82,13 @@ public class OpinionService {
 
         return new OpinionResponseDto(opinion);
     }//read() end
+
+    @Transactional(readOnly = true)
+    public PaginationDto readAllByUserId(Long userId, Pageable pageable) {//유저별 댓글
+        Page<Opinion> opinionList = opinionRepository.findAllByUsersIdAndDeletedAtIsNull(userId, pageable);
+
+        return pagination(opinionList);
+    }//readAllByKeyword end()
 
     @Transactional
     public Long update(OpinionUpdateRequestDto opinionUpdateRequestDto) {
@@ -140,5 +155,17 @@ public class OpinionService {
         return opinion.getDislikeCount();
     }//dislike() end
 
+    private PaginationDto pagination(Page<Opinion> opinionList) {
+        List<OpinionListResponseDto> opinionListResponseDto = opinionList.stream()
+                .map(post -> new OpinionListResponseDto(post))
+                .collect(Collectors.toList());
 
+        Pagination pagination = Pagination.builder()
+                .totalPages(opinionList.getTotalPages())
+                .totalElements(opinionList.getTotalElements())
+                .currentPage(opinionList.getNumber())
+                .currentElements(opinionList.getNumberOfElements())
+                .build();
+        return new PaginationDto<List<OpinionListResponseDto>>(opinionListResponseDto, pagination);
+    }
 }

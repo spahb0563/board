@@ -1,8 +1,8 @@
 package com.example.board.controller.page;
 
 
-import com.example.board.config.auth.LoginUser;
-import com.example.board.config.auth.dto.SessionUser;
+import com.example.board.security.LoginUser;
+import com.example.board.security.dto.SessionUser;
 import com.example.board.service.CategoryService;
 import com.example.board.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.servlet.http.HttpSession;
-import java.io.PipedOutputStream;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 

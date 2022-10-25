@@ -1,8 +1,8 @@
-package com.example.board.config.auth;
+package com.example.board.security;
 
 
-import com.example.board.config.auth.dto.OAuthAttributes;
-import com.example.board.config.auth.dto.SessionUser;
+import com.example.board.security.dto.SessionUser;
+import com.example.board.security.dto.OAuthAttributes;
 import com.example.board.model.entity.Users;
 import com.example.board.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
@@ -40,16 +39,14 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-        Users users = saveOrUpdate(attributes);
+        Users users = saveOrRead(attributes);
         httpSession.setAttribute("user", new SessionUser(users));
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(users.getRoleKey())),attributes.getAttributes(),attributes.getNameAttributeKey());
     }
 
-    private Users saveOrUpdate(OAuthAttributes attributes) {
-        Users users = usersRepository.findByEmail(attributes.getEmail())
-                .map(entity -> entity.update(attributes.getName(), attributes.getNickname(), attributes.getPicture() == null ? "/images/anonymous.png" : attributes.getPicture()))
-                .orElse(attributes.toEntity())
-                ;
-        return usersRepository.save(users);
+    private Users saveOrRead(OAuthAttributes attributes) {
+        Users user = usersRepository.findByEmail(attributes.getEmail()).orElseGet(() -> usersRepository.save(attributes.toEntity()));
+
+        return user;
     }
 }
