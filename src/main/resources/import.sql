@@ -1,16 +1,16 @@
-insert into category (CREATED_AT, type) values (now(), 'FREE');
-
-insert into category (CREATED_AT, type) values (now(), 'HUMOR');
-
-insert into category (CREATED_AT, type) values (now(), 'GAME');
-
-insert into category (CREATED_AT, type) values (now(), 'SPORT');
-
-insert into category (CREATED_AT, type) values (now(), 'IT');
-
-insert into category (CREATED_AT, type) values (now(), 'FOOD');
-
-insert into category (CREATED_AT, type) values (now(), 'QUESTION');
+--insert into category (CREATED_AT, type) values (now(), 'FREE');
+--
+--insert into category (CREATED_AT, type) values (now(), 'HUMOR');
+--
+--insert into category (CREATED_AT, type) values (now(), 'GAME');
+--
+--insert into category (CREATED_AT, type) values (now(), 'SPORT');
+--
+--insert into category (CREATED_AT, type) values (now(), 'IT');
+--
+--insert into category (CREATED_AT, type) values (now(), 'FOOD');
+--
+--insert into category (CREATED_AT, type) values (now(), 'QUESTION');
 --
 --insert into users (CREATED_AT, MODIFIED_AT, email, name, nickname, role, picture) values (now(), now(), 'spahb0563@naver.com', '문성준', 'spahb0563', 'USER', 'https://phinf.pstatic.net/contact/20221013_258/1665652589559BuAKX_GIF/image.gif');
 --insert into users (CREATED_AT, MODIFIED_AT, email, name, nickname, role, picture) values (now(), now(), 'four0564@gmail.com', 'spahb 0563', 'spahb 0563', 'USER', 'https://lh3.googleusercontent.com/a/ALm5wu3BY6ZeyBncqWXBSorObYhGGBPhm6FMdD4UlmL60g=s96-c');
