@@ -7,7 +7,7 @@
 <body>
 <th:block layout:fragment="content">
 <main role="main">
-  <div class="container px-5" th:with="postId=${post.id}">
+  <div class="container-sm" th:with="postId=${post.id}">
     <div class="border-bottom pb-1">
       <a th:href="@{|/${#strings.toLowerCase(post.type)}|}" th:text="'['+${post.type.title}+']'" class="text-decoration-none text-body font-weight-bold h3"></a>
     </div>
