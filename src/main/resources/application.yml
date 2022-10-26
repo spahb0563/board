@@ -5,7 +5,7 @@ spring:
       max-idle: 8
       max-active: 8
     port: 6379
-    host: 127.0.0.1
+    host: ec2-13-209-127-40.ap-northeast-2.compute.amazonaws.com
   session:
     store-type: jdbc
   profiles:
