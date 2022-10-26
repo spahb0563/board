@@ -28,10 +28,10 @@ import java.util.Map;
 @EnableCaching
 public class RedisRepositoryConfig {
 
-    @Value("${spring.redis.host}")
+    @Value("localhost")
     private String redisHost;
 
-    @Value("${spring.redis.port}")
+    @Value("6379")
     private String redisPort;
 
     @Bean
