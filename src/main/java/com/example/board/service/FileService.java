@@ -21,13 +21,13 @@ public class FileService {
     @Transactional
     public Long fileUpload(MultipartFile file) throws IOException {
 
-        String saveFileName = fileSave("/img", file);
+        String saveFileName = fileSave("images/myimg", file);
         File saveFile = File.builder()
                 .name(file.getOriginalFilename())
                 .savedName(saveFileName)
                 .type(file.getContentType())
                 .size(file.getSize())
-                .path("/img".replace(java.io.File.separatorChar, '/') + '/' + saveFileName)
+                .path("images/myimg".replace(java.io.File.separatorChar, '/') + '/' + saveFileName)
                 .build();
 
         return fileRepository.save(saveFile).getId();
