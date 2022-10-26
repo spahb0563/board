@@ -7,6 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @EntityListeners(AuditingEntityListener.class)
 @Getter
@@ -28,7 +29,7 @@ public class File {
     private Long size;
 
     @CreatedDate
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     @Builder
     public File(String name, String savedName, String path, String type, Long size) {

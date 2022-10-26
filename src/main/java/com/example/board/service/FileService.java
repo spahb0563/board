@@ -21,13 +21,13 @@ public class FileService {
     @Transactional
     public Long fileUpload(MultipartFile file) throws IOException {
 
-        String saveFileName = fileSave("C:/Users/msh/Desktop/img", file);
+        String saveFileName = fileSave("/img", file);
         File saveFile = File.builder()
                 .name(file.getOriginalFilename())
                 .savedName(saveFileName)
                 .type(file.getContentType())
                 .size(file.getSize())
-                .path("C:/Users/msh/Desktop/img".replace(java.io.File.separatorChar, '/') + '/' + saveFileName)
+                .path("/img".replace(java.io.File.separatorChar, '/') + '/' + saveFileName)
                 .build();
 
         return fileRepository.save(saveFile).getId();
@@ -45,7 +45,6 @@ public class FileService {
         java.io.File uploadDir = new java.io.File(rootLocation);
 
         if (!uploadDir.exists()) {
-            System.out.println("읎당게 ?");
             uploadDir.mkdirs();
         }
 
