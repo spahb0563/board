@@ -16,7 +16,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     Optional<Category> findByType(CategoryType categoryType);
 
-    @Query(value = "SELECT c.id            categoryId,\n" +
+    @Query(value = "" +
+            "SELECT c.id            categoryId,\n" +
             "       c.type          categoryType,\n" +
             "       p.id            postId,\n" +
             "       p.title         postTitle,\n" +
@@ -126,6 +127,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
             "                          LIMIT  5) p7) p\n" +
             "              ON c.id = p.category_id\n" +
             "       LEFT JOIN users u\n" +
-            "         ON p.users_id = u.id;\n", nativeQuery = true)
+            "         ON p.users_id = u.id order by c.id, p.id desc;\n", nativeQuery = true)
     List<CategoryMapping> findTopFivePostOfAllCategory();
 }
