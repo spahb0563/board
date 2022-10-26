@@ -33,8 +33,6 @@ spring:
       datasource:
         hikari:
           jdbc-url: jdbc:h2:mem:testdb;MODE=MYSQL; #h2가 MYSQL 쿼리 인식할 수 있게 해줌
-    hibernate:
-      ddl-auto: none
   thymeleaf:
     cache: false
     check-template-location: true
