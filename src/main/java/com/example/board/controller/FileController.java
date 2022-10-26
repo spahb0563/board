@@ -16,7 +16,7 @@ public class FileController {
 
     private final ResourceLoader resourceLoader;
 
-    @PostMapping("image")
+    @PostMapping("/image")
     public String fileUpload(@RequestParam("file")MultipartFile file) throws IOException {
 
         String url = "/image/"+fileService.fileUpload(file);
@@ -24,7 +24,7 @@ public class FileController {
         return url;
     }
 
-    @GetMapping("image/{id}")
+    @GetMapping("/image/{id}")
     public Resource read(@PathVariable Long id) {
         Resource resource = resourceLoader.getResource("file:"+fileService.read(id).getPath());
 
