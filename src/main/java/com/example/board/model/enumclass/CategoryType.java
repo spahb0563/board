@@ -14,7 +14,6 @@ public enum CategoryType {
     GAME(3,"게임", "게임 게시판", "badge badge-pill badge-danger"),
     SPORT( 4,"스포츠", "스포츠 게시판", "badge badge-pill badge-success"),
     IT( 5,"IT", "IT 게시판", "badge badge-pill badge-secondary"),
-
     FOOD(6, "요리", "요리 게시판", "badge badge-pill badge-light"),
     QUESTION( 7,"질문", "질문 게시판", "badge badge-pill badge-info");
 

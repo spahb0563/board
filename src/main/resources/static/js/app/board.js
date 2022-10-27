@@ -13,6 +13,11 @@ const main = {
 
     sort : function (sort) {
         const URLSearch = new URLSearchParams(location.search);
+        if(URLSearch.get("keyword") != null) {
+            sort = sort.replace(/([A-Z])/g, function(arg){
+                return "_"+arg.toLowerCase();
+            });
+        };
         URLSearch.set('sort', sort);
         const newParam = decodeURIComponent(URLSearch.toString());
         window.open(location.pathname + '?' + newParam, '_self');

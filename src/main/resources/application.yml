@@ -10,15 +10,15 @@ spring:
     store-type: jdbc
   profiles:
     include: oauth
-#  datasource:
-#    username: root
-#    password: root
-#    url: jdbc:mysql://localhost:3306/board?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
-  datasource: #db설정
-    url: jdbc:h2:mem:testdb;
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/board?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+#  datasource: #db설정
+#    url: jdbc:h2:mem:testdb;
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password:
   h2:
     console:
       enabled: true  #h2 콘솔 사용 가능하게 해줌
@@ -48,3 +48,5 @@ spring:
       enabled: true
       max-request-size: 20MB
       max-file-size: 20MB
+  jackson:
+    property-naming-strategy: SNAKE_CASE

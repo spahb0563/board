@@ -1,5 +1,6 @@
 package com.example.board.controller.page;
 
+import com.example.board.model.network.dto.post.PostEditResponseDto;
 import com.example.board.security.LoginUser;
 import com.example.board.security.dto.SessionUser;
 import com.example.board.model.enumclass.CategoryType;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,7 +53,6 @@ public class BoardController {
         }else {
             return "redirect:/";
         }
-
         model.addAttribute("dailyBestList", postService.readTop40OfDay(LocalDateTime.now().with(LocalTime.MIN)));
         model.addAttribute("weeklyBestList", postService.readTop40OfWeek(LocalDateTime.now().minusDays(6).with(LocalTime.MIN)));
         model.addAttribute("category", category);
@@ -110,8 +111,12 @@ public class BoardController {
 
     @GetMapping("post/{id}/edit")
     public String edit(@LoginUser SessionUser user, @PathVariable Long id, Model model) {
+        PostEditResponseDto post = postService.readEdit(id);
+        if(!user.getId().equals(post.getUserId())) {
+            return "redirect:/";
+        }
         model.addAttribute("user", user);
-        model.addAttribute("post", postService.readEdit(id));
+        model.addAttribute("post", post);
 
         return "edit";
     }// edit() end

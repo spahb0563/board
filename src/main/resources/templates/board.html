@@ -23,16 +23,18 @@
                         <button class="btn btn-light dropdown-toggle float-right" type="button" data-toggle="dropdown" id="sort">
                             <i class="bi bi-sort-down"></i>
                             <span th:if="${sort == null}">정렬하기</span>
-                            <span th:if="${#strings.equals(sort, 'id,desc')}">최신순</span>
-                            <span th:if="${#strings.equals(sort, 'likeCount,desc')}">추천순</span>
-                            <span th:if="${#strings.equals(sort, 'viewCount,desc')}">조회순</span>
-                            <span th:if="${#strings.equals(sort, 'opinionCount,desc')}">댓글순</span>
+                            <th:block th:unless="${sort == null}">
+                            <span th:if="${#strings.contains(sort, 'id')}">최신순</span>
+                            <span th:if="${#strings.contains(sort, 'like')}">추천순</span>
+                            <span th:if="${#strings.contains(sort, 'view')}">조회순</span>
+                            <span th:if="${#strings.contains(sort, 'opinion')}">댓글순</span>
+                            </th:block>
                         </button>
                         <div class="dropdown-menu" id="sortMenu">
-                            <button class="dropdown-item" value="id,desc" th:classappend="${sort == null || #strings.equals(sort, 'id,desc')} ? 'text-primary'">최신순</button>
-                            <button class="dropdown-item" value="likeCount,desc" th:classappend="${#strings.equals(sort, 'likeCount,desc')} ? 'text-primary'">추천순</button>
-                            <button class="dropdown-item" value="viewCount,desc" th:classappend="${#strings.equals(sort, 'viewCount,desc')} ? 'text-primary'">조회순</button>
-                            <button class="dropdown-item" value="opinionCount,desc" th:classappend="${#strings.equals(sort, 'opinionCount,desc')} ? 'text-primary'">댓글순</button>
+                            <button class="dropdown-item" value="id,desc" th:classappend="${sort == null || #strings.contains(sort, 'id')} ? 'text-primary'">최신순</button>
+                            <button class="dropdown-item" value="likeCount,desc" th:classappend="${sort != null && #strings.contains(sort, 'like')} ? 'text-primary'">추천순</button>
+                            <button class="dropdown-item" value="viewCount,desc" th:classappend="${sort != null && #strings.contains(sort, 'view')} ? 'text-primary'">조회순</button>
+                            <button class="dropdown-item" value="opinionCount,desc" th:classappend="${sort != null && #strings.contains(sort, 'opinion')} ? 'text-primary'">댓글순</button>
                         </div>
                     </div>
                     <div class="px-3 mb-5">

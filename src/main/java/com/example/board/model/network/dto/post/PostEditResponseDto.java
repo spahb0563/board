@@ -8,6 +8,8 @@ public class PostEditResponseDto {
 
     private Long id;
 
+    private Long userId;
+
     private String title;
 
     private String content;
@@ -16,5 +18,6 @@ public class PostEditResponseDto {
         this.id = entity.getId();
         this.title = entity.getTitle();
         this.content = entity.getContent();
+        this.userId = entity.getUsers().getId();
     }
 }
