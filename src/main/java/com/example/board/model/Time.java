@@ -48,9 +48,9 @@ public class Time {
             return DateTimeFormatter.ofPattern("HH:mm").format(time);
         }else {
             if(now.getYear() == time.getYear()) {
-                return time.format(DateTimeFormatter.ofPattern("M. d HH:mm"));
+                return time.format(DateTimeFormatter.ofPattern("M. d"));
             }else {
-                return time.format(DateTimeFormatter.ofPattern("yy. M. d HH:mm"));
+                return time.format(DateTimeFormatter.ofPattern("yy. M. d"));
             }
         }
     }
