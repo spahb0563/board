@@ -10,10 +10,9 @@ import javax.persistence.Column;
 @Getter
 public class OpinionCreateRequestDto {
 
+    private Long postId;
     @Column(columnDefinition = "LONGTEXT", nullable = false)
     private String content;
-
-    private Long postId;
 
     private Long usersId;
 

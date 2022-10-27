@@ -30,6 +30,6 @@ public class NotificationListResponseDto {
         this.postId = entity.getPost().getId();
         this.type = entity.getType();
         this.message = entity.getType().getMessage();
-        this.createdAt = Time.convertLocaldatetimeToTime(entity.getCreatedAt());
+        this.createdAt = Time.convertLocalDateTimeToTime(entity.getCreatedAt());
     }
 }

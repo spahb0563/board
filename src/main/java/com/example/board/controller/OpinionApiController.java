@@ -1,11 +1,11 @@
 package com.example.board.controller;
 
 
-import com.example.board.security.LoginUser;
-import com.example.board.security.dto.SessionUser;
 import com.example.board.model.network.dto.opinion.OpinionCreateRequestDto;
 import com.example.board.model.network.dto.opinion.OpinionResponseDto;
 import com.example.board.model.network.dto.opinion.OpinionUpdateRequestDto;
+import com.example.board.security.LoginUser;
+import com.example.board.security.dto.SessionUser;
 import com.example.board.service.OpinionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

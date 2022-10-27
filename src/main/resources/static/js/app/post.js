@@ -84,7 +84,6 @@ const main = {
     },
 
     createParent: function () {
-
         const data = {
             content : $('#opinionContent').val(),
             postId : $('#postId').val(),

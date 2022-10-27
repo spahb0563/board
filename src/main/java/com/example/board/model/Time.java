@@ -12,7 +12,7 @@ public class Time {
     public static final int DAY = 30;
     public static final int MONTH = 12;
 
-    public static String convertLocaldatetimeToTime(LocalDateTime localDateTime) {
+    public static String convertLocalDateTimeToTime(LocalDateTime localDateTime) {
         LocalDateTime now = LocalDateTime.now();
 
         long diffTime = localDateTime.until(now, ChronoUnit.SECONDS);

@@ -39,6 +39,10 @@ public class OpinionService {
     private final NotificationService notificationService;
     @Transactional
     public OpinionResponseDto create(OpinionCreateRequestDto opinionCreateRequestDto) {
+
+        System.out.println(opinionCreateRequestDto.getPostId());
+
+
         Post post = postRepository.findById(opinionCreateRequestDto.getPostId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. postID : " + opinionCreateRequestDto.getPostId()));
 
